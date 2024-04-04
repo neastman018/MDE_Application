@@ -6,25 +6,10 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
+          <strong>
           F24-06: State of the Art Robotic Motion Planning
+          </strong>
         </p>
-        {/* <div>
-          <a
-            href="./dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div> */}
       </div>
 
       <div className={styles.center}>

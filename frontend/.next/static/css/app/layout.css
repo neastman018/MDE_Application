@@ -82,7 +82,8 @@
   --vt-maroon: 134,31,65;
   --vt-orange: 229, 117, 31;
   --vt-smoke: 229, 225, 230;
-  --background-color: rgb(var(--vt-smoke));
+  --primary-background-color: #d5dbd6;
+  --secondary-background-color: #ababab;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -162,8 +163,8 @@ body {
 
 /*Controls page style*/
 body {
-  color: rgb(var(--vt-maroon));
-  background: var(--background-color)
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255)
 }
 
 a {
