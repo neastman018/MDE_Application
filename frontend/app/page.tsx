@@ -1,6 +1,8 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+
+
 export default function Home() {
   return (
     <main className={styles.main}>
@@ -31,7 +33,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Prime Vision<span>-&gt;</span>
+            Prime Vision
           </h2>
           <p>Click here to learn more about our Customer</p>
         </a>
@@ -42,9 +44,20 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Project Info<span>-&gt;</span>
+            Project Info
           </h2>
           <p>Click here to learn more about Project</p>
+        </a>
+
+        <a
+          href="./methodology"
+          className={styles.card}
+          rel="noopener noreferrer"
+        >
+          <h2>
+            Approach
+          </h2>
+          <p>Click Here to explore how we takled the project</p>
         </a>
 
         <a
@@ -53,7 +66,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Results <span>-&gt;</span>
+            Results
           </h2>
           <p>Click Here to explore our results</p>
         </a>
@@ -64,7 +77,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            About Us <span>-&gt;</span>
+            About Us
           </h2>
           <p>
             Click here to learn more about our team

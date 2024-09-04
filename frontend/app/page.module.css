@@ -5,7 +5,7 @@
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
-  background-color: #d5dbd6;
+  background-color: #ffffff;
 }
 
 .description {
@@ -17,7 +17,7 @@
   width: 100%;
   z-index: 2;
   font-family: "Eras Bold ITC", sans-serif;
-  color: rgb(var(--vt-maroon));
+  color: rgb(var(--white));
 
 
 }
@@ -33,7 +33,7 @@
   position: relative;
   margin: 0;
   padding: 1rem;
-  background-color: rgb(var(--vt-smoke));
+  background-color: rgb(var(--vt-maroon));
   border: 1px solid rgba(var(--callout-border-rgb), 0.10);
   border-radius: var(--border-radius);
 
@@ -46,7 +46,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  grid-template-columns: repeat(5, minmax(20%, auto));
   /* grid-template-rows: 300px 300px 300px; Example: 3 rows */
   /*width: 100vw; /*Sets the width of the grid to cover the entire viewport */
   /* height: 100vh; Sets the height of the grid to cover the entire viewport */

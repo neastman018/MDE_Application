@@ -14,7 +14,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
+import FeaturedPost from './components/personcard';
+
 
 
 const theme = extendTheme({
@@ -37,7 +40,39 @@ const theme = extendTheme({
     // ...other properties
   });
 
-
+  const featuredPosts = [
+    {
+      title: 'Nic Cicerella',
+      major: 'CPE - Machine Learning',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Post title',
+      major: 'Nov 11',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Post title',
+      major: 'Nov 11',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Nick Eastman',
+      major: 'EE - Energy and Power Electronic Systems',
+      description: 'Test',
+      image: 'Logo.png',
+      imageLabel: 'Image Text',
+    },
+  ];
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -50,6 +85,7 @@ const drawerWidth = 240;
 const navItems = [
   {name:'Home', url:'.'}, 
   {name:'Project Info', url:'./project'},
+  {name:'Approach', url:'./methodology'},
   {name:'Results', url:'./results'}
 ];
 
@@ -134,23 +170,15 @@ export default function DrawerAppBar(props: Props) {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography variant="h4">
-          About Us
-        </Typography>
-        <Typography variant="body1">
-          - Project, Name, Major
-        </Typography>
-        <Typography variant="body1">
-          - Short description about our professional interests
-        </Typography>
-        <Typography variant="body1">
-          - Maybe a professional photo?
-        </Typography>
-
+      <Box component="main" sx={{ p: 10 }}>
+        <Grid container spacing={4}>
+            {featuredPosts.map((post) => (
+              <FeaturedPost key={post.title} post={post} />
+            ))}
+        </Grid>
       </Box>
     </Box>
+    
     </Experimental_CssVarsProvider>
   );
 }

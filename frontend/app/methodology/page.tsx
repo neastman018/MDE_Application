@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
 
-
 const theme = extendTheme({
     colorSchemes: {
       light: {
@@ -50,7 +49,7 @@ const drawerWidth = 240;
 const navItems = [
   {name:'Home', url:'.'}, 
   {name:'Project Info', url:'./project'},
-  {name:'Approach', url:'./methodology'},
+  {name:'Results', url:'./results'},
   {name:'About Us', url:'./aboutus'}
 ];
 
@@ -135,27 +134,17 @@ export default function DrawerAppBar(props: Props) {
           {drawer}
         </Drawer>
       </nav>
+
+
+
+
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        <Typography variant="h4">
-          Results Page
-        </Typography>
-        <Typography variant="body1">
-          - Visual Representations of our Results
-        </Typography>
-        <Typography variant="body1">
-          - Comparisons of Algorithms
-        </Typography>
-        <Typography variant="body1">
-          - Conclusions
-        </Typography>
-        <Typography variant="body1">
-          - Probably crunch numbers and make graphic in python then auto update it with a socket
-        </Typography>
+
+
       </Box>
     </Box>
     </Experimental_CssVarsProvider>
   );
 }
-  
   
