@@ -57,7 +57,7 @@ export default function Home() {
           <h2>
             Approach
           </h2>
-          <p>Click Here to explore how we takled the project</p>
+          <p>Click Here to explore how we tackled the project</p>
         </a>
 
         <a

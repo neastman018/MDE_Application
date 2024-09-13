@@ -1,41 +1,49 @@
 import json
 import os
 from datetime import datetime
+import json
+import os
+from datetime import datetime
+import random
 
-date = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
+num_files = 20
+algorithms = ['A*', 'D*', 'RandomTree', 'A* with ML', 'D* with ML', 'RandomTree with ML']
+floor_plans = ['floor plan 1', 'floor plan 2', 'floor plan 3', 'floor plan 4', 'floor plan 5']
 
 # Data to be written to the JSON file
-data = {
-    "simulationConducted": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "algorithm": "name of algorithm",
-    "floor_plan": "floor plan",
-    "numberOfRobots": "number of robots",
-    "numberOfNodes": "number of nodes",
-    "regionalReRouteRadius": "proximity of robots to re-route on encountering an obstacle",
-    "simulation results": {
-        "packagesHourRobots": "packages per hour per robot",
-        "avgTimePerPackage": "average time per package",
-        "emStopsPerObstacle": "number of emergency stops per obstacle in simulation",
-        "nodesPerPath": "number of nodes per path",
-        "avgLengthPath": "average length of a path",
-        "avgSpeedofTransit": "average time from pickup to dropoff",
-        "numberofPathsReRouted": "number of paths that were re-routed per obstacle",
-        "calculationTime": "whatever that means exactly"
+for i in range(num_files):
+    print(i)
+    data = {
+        "SimulationConducted": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '_' + str(i),
+        "Algorithm": random.choice(algorithms),
+        "Floor Plan": random.choice(floor_plans),
+        "Number of Robots": random.randint(1, 20),
+        "Number of Nodes": random.randint(1, 500),
+        "Regional Reroute Radius": random.randint(1, 5),
+        "simulation results": {
+            "Packages/Hour/Robot": random.randint(1, 20),
+            "Avgerage Time per Package": random.randint(30, 1000),
+            "Emergency Stops per Obstacle": random.randint(1, 20),
+            "Average Nodes per Path": random.randint(1, 20),
+            "Avgerage Length of Path": random.randint(1, 100),
+            "Number of Paths Rerouted per Stop": random.randint(1, 10),
+            "Calculation Time": random.randint(1, 1000),
+        },
+        "commit": False
     }
-}
 
-# Specify the directory and filename
-directory = 'backend/app/data'
-filename = date + '_data.json'
+    # Specify the directory and filename
+    directory = 'backend/app/data'
+    filename = datetime.now().strftime("%Y-%m-%d_%H_%M_%S") + '_num' + str(i) + '_data.json'
 
-# Create the directory if it doesn't exist
-os.makedirs(directory, exist_ok=True)
+    # Create the directory if it doesn't exist
+    os.makedirs(directory, exist_ok=True)
 
-# Full path to the file
-filepath = os.path.join(directory, filename)
+    # Full path to the file
+    filepath = os.path.join(directory, filename)
 
-# Write the data to a JSON file
-with open(filepath, 'w') as json_file:
-    json.dump(data, json_file, indent=4)
+    # Write the data to a JSON file
+    with open(filepath, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
-print(f"Data has been written to {filename}")
+    print(f"Data has been written to {filename}")

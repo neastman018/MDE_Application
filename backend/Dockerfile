@@ -15,4 +15,4 @@ RUN poetry install
 COPY ./app ./app
 
 # Expose the port
-EXPOSE 5000
+EXPOSE 4000
