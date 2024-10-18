@@ -31,6 +31,9 @@ class LogModel(BaseModel):
     files: list[dict]
     files_uploaded: bool = False
 
+class SearchModel(BaseModel):
+    search: str
+    deleteFile: int = -1
 
 
 app.add_middleware(
@@ -117,6 +120,43 @@ async def read(variables: LogModel):
     to_return = {
         "files": None,
         "files_uploaded": uploaded,
+    }
+
+    return JSONResponse(content=to_return)
+    
+@app.get("/search", tags=["todos"])
+async def get_variables(variables: SearchModel):
+    return {  
+        "search": variables.search
+        }
+
+@app.post("/search", tags=["root"])
+async def reads(variables: SearchModel):
+
+    if variables.deleteFile is type(None):
+        print("No value found for delete")
+    else: print(f"Deleting Files at index {variables.deleteFile}")
+
+    print(f" Search:{variables.search}")
+    files_to_return = mongo.search_logs(variables.search)
+    print(f"Number of Files Returned: {len(files_to_return)}")
+
+    if 0 <= variables.deleteFile < len(files_to_return):
+        mongo.delete_log(files_to_return[variables.deleteFile])
+        del files_to_return[variables.deleteFile]
+
+    if variables.deleteFile == -10:
+        mongo.clear_logs()
+        print("Deleting All Files")
+        
+    file_names = [file["Simulation Name"] for file in files_to_return]
+    # Assuming files_to_return contains MongoDB documents
+    json_files = [json.dumps({**file, "_id": str(file["_id"])}) for file in files_to_return]
+    print(f"Number of Json Files Returned: {len(files_to_return)}")
+    
+    to_return = {
+        "file_names": file_names,
+        "json_files": json_files
     }
 
     return JSONResponse(content=to_return)

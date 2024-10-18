@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {ClearIcon, UploadIcon} from '@mui/icons-material';
-import {Typography, Button, Box, CircularProgress} from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import UploadIcon from '@mui/icons-material/Upload';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button'; 
+import Box from '@mui/material/Box'; 
+import CircularProgress from '@mui/material/CircularProgress';
 import { useLogs } from '../hooks/get_logs';
 
 
-export default function DragNdrop({onFilesSelected, width, height}) {
+export default function DragNDrop({onFilesSelected, width, height}) {
   const [files, setFiles] = useState([]);
   const [submittedFiles, setSubmittedFiles] = useState([]);
-  const [filesUploaded, setFilesUploaded] = useState(false);
   
-  const { data: acknowledged_files, isLoading, isError } = useLogs(submittedFiles, filesUploaded);
+  const { data: acknowledged_files, isLoading, isError } = useLogs(submittedFiles);
 
     const handleFileChange = (event) => {
         // Changes the state of files to match those elected
@@ -18,7 +21,6 @@ export default function DragNdrop({onFilesSelected, width, height}) {
         const newFiles = Array.from(selectedFiles);
         setFiles((prevFiles) => [...prevFiles, ...newFiles]);
         }
-        setFilesUploaded(false)
     };
 
 
@@ -30,8 +32,6 @@ export default function DragNdrop({onFilesSelected, width, height}) {
         const newFiles = Array.from(droppedFiles);
         setFiles((prevFiles) => [...prevFiles, ...newFiles]);
         }
-        setFilesUploaded(false)
-
     };
 
     const handleRemoveFile = (index) => {
@@ -70,10 +70,8 @@ export default function DragNdrop({onFilesSelected, width, height}) {
                 console.error("Please upload a valid JSON file");
             }
         }
-        
-        setFilesUploaded(false); // Set the files uploaded flag to false as htey
         setFiles([]) // This Clears the files selected
-        };
+    };
         
     useEffect(() => {
         onFilesSelected(files);
@@ -90,6 +88,7 @@ export default function DragNdrop({onFilesSelected, width, height}) {
             justifyContent: 'center', // Center content vertically
             alignItems: 'center', // Center content horizontally
             textAlign: 'center', // Center text inside the box
+            zindex: 1300 
             }}>
             <Box
                 className={`document-uploader ${
@@ -111,7 +110,10 @@ export default function DragNdrop({onFilesSelected, width, height}) {
                     </Button>
                 )}
                 <Typography sx={{fontSize:'16px', fontWeight:'bold', paddingTop:3}}>
-                        Drag and Drop Your Simulation Files Here
+                        Drag and Drop Your Simulation Files Here: 
+                </Typography>
+                <Typography sx={{fontSize:'16px', fontWeight:'bold', paddingTop:3}}>
+                    Make Sure you close the popup before switching to another tab!
                 </Typography>
                 {isLoading ? (
                     <CircularProgress />

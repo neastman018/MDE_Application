@@ -4,18 +4,11 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import WestIcon from '@mui/icons-material/West';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -24,9 +17,13 @@ import UploadIcon from '@mui/icons-material/Upload';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css'
 import DragNDrop from './uploadpopup';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import { useSearch } from '../hooks/get_search';
+import CircularProgress from '@mui/material/CircularProgress';
+import SimPopUp from './simpopup';
 
-
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme }) => ({
@@ -83,11 +80,24 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+
+
+
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [files, setFiles] = React.useState([]);
 
+  const [search, setSearch] = React.useState("");
+  const [deleteFile, setDeleteFile] = React.useState(-1);
+
+  const { data: search_results, isLoading, isError } = useSearch(search, deleteFile);
+
+
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+    setSearch(event.target.value); // Set the search value on pressing Enter
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,6 +111,7 @@ export default function PersistentDrawerLeft() {
     if (window.confirm('Do you want to delete all the Simulation Logs')) {
       const password = prompt('Please enter the password to clear logs:');
       if (password === 'ClearLogs') {
+        setDeleteFile(-10)
         alert('All logs have been cleared');
       } else {
         alert('Incorrect password. Logs have not been cleared.');
@@ -108,12 +119,31 @@ export default function PersistentDrawerLeft() {
     }
   };
 
+  
+
 
   const [showDragNDrop, setShowDragNDrop] = React.useState(false);
+  const [showSimLog, setShowSimLog] = React.useState(false);
 
   const handleUploadClick = () => {
     setShowDragNDrop(!showDragNDrop);
   };
+
+  const handleSimLogClick = () => {
+    setShowSimLog(!showSimLog);
+  };
+
+  const handleDeleteFile = (index) => {
+    if (window.confirm('Do you want to delete this Simulation Logs')) {
+      setDeleteFile(index),
+      console.log(index),
+      console.log(typeof index)
+    }
+  }
+
+  React.useEffect(() => {
+    setDeleteFile(-1);
+  }, [search_results]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -177,11 +207,69 @@ export default function PersistentDrawerLeft() {
             <UploadIcon sx={{ marginRight: '16px' }} /> {/* Add margin to create indent */}
             <Typography>Upload Logs</Typography>
           </ListItemButton>
-          <Popup open={showDragNDrop} onClose={() => setShowDragNDrop(false)} modal sx={{ borderTopLeftRadius: '16px', borderTopRightRadius: '16px',}}>
+          <Popup
+            open={showDragNDrop}
+            onClose={() => setShowDragNDrop(false)}
+            modal
+            closeOnDocumentClick
+            contentStyle={{
+              maxHeight: "50vh", // Set the maximum height of the popup
+              overflowY: "auto", // Allow vertical scrolling if content exceeds max height
+            }}
+          >
             <DragNDrop onFilesSelected={setFiles} />
           </Popup>
+
         </List>
         <Divider />
+        <Box sx={{ display: 'flex', alignItems: 'center', paddingLeft: '5px' }}>
+          <Button onClick={() => {
+              const inputValue = document.getElementById('standard-basic').value;
+              setSearch(inputValue); //Set search value when clicking the button
+              console.log(inputValue);
+            }}>
+              <SearchIcon sx={{ marginRight: '8px' }} />
+          </Button>
+          <TextField
+            id="standard-basic"
+            label="Search"
+            variant="standard"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleSearch(event);
+              }
+            }}
+          />
+        </Box>
+        <Divider />
+
+       
+        {isLoading ? (
+            <CircularProgress />
+        ) : isError ? (
+            <Typography color="error">Error Getting Files</Typography>
+        ) : search_results?.json_files ? (
+          <Box>
+            {search_results.file_names.map((fileName, index) => (
+              <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                <Button
+                  onClick={() => handleDeleteFile(index)}
+                  sx={{ minWidth: 'auto', paddingLeft: '16px' }}
+                >
+                  <DeleteIcon sx={{ marginRight: '16px' }} />
+                </Button>
+                <ListItemButton onClick={handleSimLogClick} sx={{ flexGrow: 1 }}>
+                  <Typography>{fileName}</Typography>
+                </ListItemButton>
+                <Popup open={showSimLog} onClose={() => setShowSimLog(false)} modal>
+                  <SimPopUp code={search_results.json_files[index]} />
+                </Popup>
+              </Box>
+            ))}
+          </Box>
+        ) : (
+          <Typography>No Search Results</Typography>
+        )}
       </Drawer>
       <Main open={open}></Main>
     </Box>

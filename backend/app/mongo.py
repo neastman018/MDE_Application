@@ -8,6 +8,7 @@ from colorama import Fore, Back, Style
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import pymongo.errors
 import seaborn as sb
 import base64
 from io import BytesIO
@@ -260,7 +261,7 @@ class Mongo:
         return search_results
 
     """
-    Grabs each the independent variable values and nuliptle dependent variable averages and makes a multi-dimensional array
+    Grabs each the independent variable values and multiple dependent variable averages and makes a multi-dimensional array
     ind Example: 'algorithm'
     deps Example: ['avgTimePerPackage', 'packagesHourRobots']
     """
@@ -308,7 +309,51 @@ class Mongo:
             search_results[ind].append(doc[ind])
             search_results[dep].append(doc['simulation results'][dep])
         
-        return search_results      
+        return search_results    
+
+
+    # Method to grab all the logs from the database
+    def get_all_logs(self):
+        try:
+            data = self.simStats.find({})
+            print(f"{Fore.GREEN}Retrieved logs from the database{Style.RESET_ALL}")
+            for doc in data:
+                print(type(doc))
+            return data
+        except pymongo.errors.PyMongoError as e:
+            print(f"{Fore.RED}Error retrieving logs from the database: {e}{Style.RESET_ALL}")
+            return []
+        
+    """
+    Method to parse all documents and search for a string
+    @param search_str: The string to search for in the documents
+    """
+   
+    def search_logs(self, search_str):
+        numFiles = 0
+        files = []
+        try:
+            data = self.simStats.find({})
+            for doc in data:
+                if search_str in str(doc):
+                    numFiles += 1
+                    files.append(doc)
+
+        except pymongo.errors.PyMongoError as e:
+            print(f"{Fore.RED}Error retrieving logs from the database{Style.RESET_ALL}")
+            return []
+        if (numFiles == 0):
+            print(f"{Fore.RED}No logs found containing the string '{search_str}'{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}Found {numFiles} logs containing the string '{search_str}'{Style.RESET_ALL}")
+        return files
+    
+    def delete_log(self, log):
+        try:
+            result = self.simStats.delete_one(log)
+            print(f"{Fore.GREEN}Deleted 1 log from the database{Style.RESET_ALL}")
+        except pymongo.errors.PyMongoError as e:
+            print(f"{Fore.RED}Error deleting log from the database: {e}{Style.RESET_ALL}")
+
 #============================================================================================================================================================================================= 
 # Graphing Methods
 #=============================================================================================================================================================================================

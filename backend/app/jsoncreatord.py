@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 import random
 
-num_files = 4
+num_files = 50
 algorithms = ['A*', 'D*', 'RandomTree', 'A* with ML', 'D* with ML', 'RandomTree with ML']
 floor_plans = ['floor plan 1', 'floor plan 2', 'floor plan 3', 'floor plan 4', 'floor plan 5']
 
@@ -17,6 +17,7 @@ for i in range(num_files):
     print(i)
     data = {
         # Keys cannot have spaces or it will throw a conversion error when trying to query from Mongo
+        "Simulation Name": str(i) + "_Test Simulation ",
         # "Simulation Conducted": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '_' + str(i),
         "Simulation Conducted": "Test Simulations",
         "Algorithm": random.choice(algorithms),
