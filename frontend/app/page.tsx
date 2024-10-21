@@ -3,7 +3,8 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import * as React from "react";
-import FlipCardComponent from "./components/flipcard";
+import {Box, CssBaseline, Grid} from "@mui/material";
+import FlipCardLink from "./components/linkflipcard";
 
 
 const components = [
@@ -54,7 +55,7 @@ export default function Home() {
           </strong>
         </p>
       </div>
-
+    
       <div className={styles.center}>
         <Image
           className={styles.logo}
@@ -64,12 +65,15 @@ export default function Home() {
           height={200}
           priority
         />
-      </div> 
-      <div className={styles.flipCardContainer}>
-        {components.map((component, index) => (
-          <FlipCardComponent key={index} post={component} />
-        ))}
       </div>
+      <Box sx={{paddingTop: '5px' }}>
+        <Grid container spacing={4}>
+        {components.map((component, index) => (
+          <FlipCardLink key={index} post={component}/>
+        ))}
+        </Grid>
+      </Box>
+
     </main>
   );
 }

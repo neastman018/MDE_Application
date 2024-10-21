@@ -12,6 +12,7 @@ const FlipCard = styled(Box)({
     flexGrow: 1,
     flexShrink: 0,
     flexBasis: 'auto',
+    padding: '10px',
 });
 
 // Avoid passing isFlipped to the DOM element
@@ -44,7 +45,7 @@ const FlipCardBack = styled(Card)({
     transform: "rotateY(180deg)",
 });
 
-export default function FlipCardComponent({post}) {
+export default function FlipCardLink({post}) {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const handleMouseEnter = () => {
@@ -83,4 +84,3 @@ export default function FlipCardComponent({post}) {
         </FlipCard>
     );
 };
-

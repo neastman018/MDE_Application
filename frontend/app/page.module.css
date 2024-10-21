@@ -237,10 +237,15 @@
   flex-wrap: wrap;
   justify-content: center; /* Centers the cards */
   gap: 10px; /* Adds space between cards */
+
 }
 
 .flipCardContainer > div {
   flex: 1 1 150px; /* Controls the size and allows wrapping. Adjust the minimum width */
+  justify-content: space-around;
   max-width: 300px; /* You can adjust the max width of the card */
   min-width: 200px; /* Set the minimum width so cards don't shrink too much */
 }
+
+
+
