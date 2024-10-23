@@ -4,7 +4,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend/app:/frontend/app
+      - ./frontend/public:/frontend/public
+    # command: tail -f /dev/null #For Debugging
     command: npm run dev
 
   backend: # Fast Api Server
