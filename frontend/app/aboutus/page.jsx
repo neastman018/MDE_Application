@@ -5,7 +5,7 @@ import {Box, CssBaseline, Grid} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
 import FeaturedPost from '../components/personcard';
 import DrawerAppBar from '../components/navbar';
-import AboutUsCard from '../components/aboutuscard';
+import AboutUsCard from '../components/aboutUsCard';
 
 
 const theme = extendTheme({
@@ -62,13 +62,6 @@ const theme = extendTheme({
     },
   ];
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
 
 const navItems = [
   {name:'Home', url:'.'}, 
@@ -157,7 +150,7 @@ const aboutUsCards = [
   }
 ]
 
-export default function AboutUsPage(props: Props) {
+export default function AboutUsPage() {
  
   return (
     <Experimental_CssVarsProvider theme={theme}>
