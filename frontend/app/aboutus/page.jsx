@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import {Box, CssBaseline, Grid} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
+import FeaturedPost from '../components/personcard';
 import DrawerAppBar from '../components/navbar';
 import AboutUsCard from '../components/aboutuscard';
 
@@ -27,13 +28,39 @@ const theme = extendTheme({
     // ...other properties
   });
 
- interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
+  const featuredPosts = [
+    {
+      title: 'Nic Cicerella',
+      major: 'CPE - Machine Learning',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Post title',
+      major: 'Nov 11',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Post title',
+      major: 'Nov 11',
+      description:
+        'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      image: 'https://source.unsplash.com/random?wallpapers',
+      imageLabel: 'Image Text',
+    },
+    {
+      title: 'Nick Eastman',
+      major: 'EE - Energy and Power Electronic Systems',
+      description: 'Test',
+      image: 'Logo.png',
+      imageLabel: 'Image Text',
+    },
+  ];
 
 const navItems = [
   {name:'Home', url:'.'}, 
@@ -67,16 +94,13 @@ const aboutUsCards = [
     `,
   },
   {
-    name: "Haley Rindfleisch",
-    major: "CPE - Control, Robotics, and Autonomy",
+    name: "Haley Rindfliech",
+    major: "CPE - Control Robotics and Autonomy",
     role: "Algorithm and Simulation Environment Developer",
     alt: "Haley Rindfleisch",
     image: "HaleyRindfleisch.png",
     description: `
-    Haley is a senior study computer engineering and will be graduating in December of 2024. 
-    She would like to work on the control systems of robots. Specifically, the movements of the robots 
-    so that they can move smoothly. After graduation she will be completing my Masters of Science in Computer 
-    Engineering at Viriginia Tech at the Center for Marine Autonomy and Robotics
+    Something about General Motors probably and IEEE and open bar at expo
     `,
   },
   {
@@ -86,11 +110,9 @@ const aboutUsCards = [
     alt: "Mitchell Huynh",
     image: "Mitchell.png",
     description: `
-    Mitchell is a senior study computer engineering and will be graduating in December of 2024. He will be
-    working at Freddie Mac as a software developer analyst after graduation. He hopes to eventually move into
-    robotics, automation, or embedded systems, for medical applications.
-    `
-  },
+    From Nova and I cannot spell his name correctly off the top of my head
+    `,
+  },  
   {
     name: "Kelley Andrews",
     major: "General Electrical: On Shore Wind Divion (Retired)",
@@ -127,7 +149,7 @@ const aboutUsCards = [
   }
 ]
 
-export default function AboutUsPage(props: Props) {
+export default function AboutUsPage() {
  
   return (
     <Experimental_CssVarsProvider theme={theme}>

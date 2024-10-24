@@ -27,14 +27,6 @@ const theme = extendTheme({
   });
 
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
 const navItems = [
   {name:'Home', url:'.'}, 
   {name:'Project Info', url:'./project'},
@@ -42,7 +34,7 @@ const navItems = [
   {name:'About Us', url:'./aboutus'}
 ];
 
-export default function ApproachPage(props: Props) {
+export default function ApproachPage() {
   return (
     <Experimental_CssVarsProvider theme={theme}> 
 

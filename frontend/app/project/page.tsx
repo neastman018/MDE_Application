@@ -26,9 +26,6 @@ const theme = extendTheme({
   },
 });
 
-interface Props {
-  window?: () => Window;
-}
 
 const navItems = [
   { name: 'Home', url: '.' },
@@ -122,7 +119,7 @@ const objectiveCards = [
     `
   } 
 ]
-export default function ProjectPage(props: Props) {
+export default function ProjectPage() {
   return (
     <Experimental_CssVarsProvider theme={theme}>
         <CssBaseline />
