@@ -4,7 +4,6 @@ import {Box, CssBaseline, Toolbar} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
 import  AlgorithmTabs from '../components/tabs';
 import DrawerAppBar from '../components/navbar';
-import SimsDrawer from '../components/simsdrawer';
 
 const theme = extendTheme({
     colorSchemes: {

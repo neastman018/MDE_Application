@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import * as React from "react";
-import {Box, CssBaseline, Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import FlipCardLink from "./components/linkflipcard";
 
 

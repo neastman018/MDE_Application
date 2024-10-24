@@ -5,8 +5,6 @@ import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} 
 import DrawerAppBar from '../components/navbar';
 import Graphs from '../components/graphdisplay';
 import SimsDrawer from '../components/simsdrawer';
-import { Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
 const theme = extendTheme({
   colorSchemes: {
