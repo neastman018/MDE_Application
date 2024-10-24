@@ -65,7 +65,7 @@ export default function FlipCardComponent({post, width, height}) {
                 {/* Front Side */}
                 <FlipCardFront>
                     <CardContent sx = {{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100%'}}>
-                        <Typography variant='h2' style={{ color: "#861F41", fontSize: '1.5rem', fontWeight: 'bold', textAlign: 'center'}}>
+                        <Typography variant='h2' style={{ color: "#861F41", fontSize: '1.5em', fontWeight: 'bold', textAlign: 'center'}}>
                             {post.title}
                         </Typography>
                     </CardContent>
@@ -74,7 +74,7 @@ export default function FlipCardComponent({post, width, height}) {
                 {/* Back Side */}
                 <FlipCardBack>
                     <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                        <Typography varient='body1' style={{ color: "#000", fontSize: '1.0rem', textAlign: 'center' }}>
+                        <Typography varient='body1' style={{ color: "#000", fontSize: '1.0em', textAlign: 'center' }}>
                             {post.description}
                         </Typography>
                     </CardContent>

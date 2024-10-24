@@ -44,6 +44,25 @@ const picCards = [
   }
 ];
 
+const overallCards = [
+  {
+    title: "The Problem",
+    description: `
+        Prime Visions current robotic path planning system is inefficient and causes bottlenecks in the warehouse.
+        This causes the robots to deliever less packages which results in more robots or time required to
+        devlier packages.
+        `,
+  },
+  {
+    title: "Our Solution",
+    description: `
+        We will investigate different multi-robot path planning algorithms and strageties to increase the robot's efficiency.
+        Through this process we hope to be able to make recommendations to Prime Vision to improve their path planning
+        system and increase package sorting speeds. 
+        `,
+  },
+];
+
 const problemCards = [
   {
     title: "Bottle Necks",
@@ -108,7 +127,20 @@ export default function ProjectPage(props: Props) {
     <Experimental_CssVarsProvider theme={theme}>
         <CssBaseline />
         <DrawerAppBar navItems={navItems} theme={theme} />
-        <Box component="main" sx={{ p: 10, paddingTop: 20 }}>
+        <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center', paddingTop: 15 }}>
+          <Box sx={{ padding: 2, flexDirection: "row" }}>
+            <Grid container spacing={2} sx={{ padding: 2, justifyContent: 'center', alignItems: 'center' }}>
+              {overallCards.map((component, index) => (
+                <Grid item xs={12} md={4} key={index}>
+                  <FlipCardComponent key={index} post={component} width={"900px"} height={"200px"} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Card>
+
+
+        <Box component="main" sx={{ p: 10 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 10 }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
               <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
