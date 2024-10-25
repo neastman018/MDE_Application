@@ -47,6 +47,8 @@ const FlipCardBack = styled(Card)({
 
 export default function FlipCardLink({post}) {
     const [isFlipped, setIsFlipped] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+
 
     const handleMouseEnter = () => {
         setIsFlipped(true);
@@ -57,11 +59,18 @@ export default function FlipCardLink({post}) {
     };
 
     const handleClicked = () => {
+        setIsClicked(true);
         window.location.href = post.link;
     };
 
+
+
     return (
-        <FlipCard onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClicked}>
+        <FlipCard onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClicked} 
+            style={{ 
+            opacity: isClicked ? 0.5 : 1, 
+            transition: 'background-color 0.3s ease-in-out' 
+        }}>
             <FlipCardInner isflipped={isFlipped}>
                 {/* Front Side */}
                 <FlipCardFront>

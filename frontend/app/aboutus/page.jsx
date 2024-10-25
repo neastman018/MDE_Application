@@ -77,10 +77,10 @@ const aboutUsCards = [
     alt: "Nick Eastman",
     image: "NickEastman.jpg",
     description: `
-    Nick is studying electrical engineering, focusing on energy and power electronic systems. He will be graduating in May 2025.
-    You may be wondering what a power electronics guy is doing on this CS project. You would not be alone, as Nick was wondering about that too!
-    The answer is learning multiple software languages, several frameworks, and how to be a web developer. He looks forward to taking a break from
-    electrical engineering to pursue ministry serving the homeless or the youth.
+    Nick is studying electrical engineering, focusing on energy and power electronic systems and will be graduating in May 2025.
+    He hopes to return to full time engineering after graduation after a year spent on mission doing service work in the United States.
+    He hopes to continue to improve his engineering and web development skills in the meantime before finishing out his degree on a strong note, 
+    and use his skills on a variety of personal projects.
     `,
   },
   {
@@ -100,7 +100,10 @@ const aboutUsCards = [
     alt: "Haley Rindfleisch",
     image: "HaleyRindfleisch.png",
     description: `
-    Something about General Motors probably and IEEE and open bar at expo
+    Haley is studying computer engineering and will be graduating in December of 2024. After graduation she will
+    continue here studies at Virginia Tech, working towards her Masters of Science in Computer Engineering. She will 
+    be working at the Center for Marine Autonomy and Robotics. She hopes to work on the control systems of robots. 
+    Specifically, the movements of the robots so that they can move smoothly.
     `,
   },
   {
@@ -110,7 +113,9 @@ const aboutUsCards = [
     alt: "Mitchell Huynh",
     image: "Mitchell.png",
     description: `
-    From Nova and I cannot spell his name correctly off the top of my head
+    Mitchell is a senior studying computer engineering and will be graduation in December of 2024. After graduation
+    he will be working as a software developer analyst at Freddie Mac. He is interested in eventually working with
+    robotics, automation, or embedded systems, for medical applications.
     `,
   },  
   {

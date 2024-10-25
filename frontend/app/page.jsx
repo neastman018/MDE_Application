@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import * as React from "react";
-import {Box, Grid} from "@mui/material";
+import {Box, Grid, Typography, Card} from "@mui/material";
 import FlipCardLink from "./components/linkflipcard";
 
 
@@ -48,32 +48,42 @@ const components = [
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          <strong>
-          F24-06: State of the Art Robotic Motion Planning
-          </strong>
-        </p>
-      </div>
-    
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/VTLogo.png"
-          alt="VT Logo"
-          width={360}
-          height={200}
-          priority
-        />
-      </div>
+      <Card
+      sx={{
+        backgroundColor: '#861F41', // Chicago maroon color hex code
+        borderRadius: '16px', // Adjusts the corner rounding
+        padding: '24px', // Adds padding to fit the text nicely
+        paddingTop: '16px', // Adds padding to fit the text nicely
+        paddingBottom: '16px', // Adds padding to fit the text nicely
+        textAlign: 'center',
+        color: 'white', // Changes the text color to white
+        fontWeight: 'bold', // Makes the text bold
+        margainBottom: '5px', // Adds space between the card and the next element
+      }}
+      >
+      <Typography variant="h4">
+      F24-06: State of the Art Robotic Motion Planning
+      </Typography>
+    </Card>
+  
+    <Image
+        src="/VTLogo.png"
+        alt="VT Logo"
+        width={360}
+        height={200}   
+        style={{ marginTop: '0px' }} // Removes any extra margin on top of the image
+
+    />
+  
+      
       <Box sx={{paddingTop: '5px' }}>
-        <Grid container spacing={4}>
-        {components.map((component, index) => (
-          <FlipCardLink key={index} post={component}/>
-        ))}
-        </Grid>
+      <Grid container spacing={4}>
+      {components.map((component, index) => (
+        <FlipCardLink key={index} post={component}/>
+      ))}
+      </Grid>
       </Box>
 
     </main>
-  );
+    );
 }
