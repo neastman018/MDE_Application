@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import {API_ENDPOINT} from "@/constants"
+import {API_ENDPOINT} from "../constants"
 
 export const useSearch = (search, deleteFile) => {
   return useQuery({
