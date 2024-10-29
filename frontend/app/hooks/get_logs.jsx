@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import {API_ENDPOINT} from "@/constans"
+import {API_ENDPOINT} from "@/constants"
 
 export const useLogs = (files, tosubmit) => {
     return useQuery({
