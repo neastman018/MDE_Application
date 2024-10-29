@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import {API_ENDPOINT} from "@/constans"
 
 export const useGraphVariables = (independent, dependent) => {
   return useQuery({
@@ -10,7 +11,7 @@ export const useGraphVariables = (independent, dependent) => {
 
 export const getGraphVariables = async (independent, dependent) => {
   const response = await axios.post(
-    `http://localhost:4000`,
+    API_ENDPOINT,
     { independent, dependent },
   );
   return response.data;

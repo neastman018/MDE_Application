@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import {API_ENDPOINT} from "@/constans"
 
 export const useSearch = (search, deleteFile) => {
   return useQuery({
@@ -10,7 +11,7 @@ export const useSearch = (search, deleteFile) => {
 
 export const getSearch = async (search, deleteFile) => {
   const response = await axios.post(
-    `http://localhost:4000/search`,
+    API_ENDPOINT,
     { search, deleteFile },
   );
   return response.data;

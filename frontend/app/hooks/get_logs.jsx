@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import {API_ENDPOINT} from "@/constans"
 
 export const useLogs = (files, tosubmit) => {
     return useQuery({
@@ -10,7 +11,7 @@ export const useLogs = (files, tosubmit) => {
 
 export const getLogVariables = async (files, tosubmit) => {
   const response = await axios.post(
-    `http://localhost:4000/logs`,
+    API_ENDPOINT,
     {files, tosubmit},
   );
   return response.data;
