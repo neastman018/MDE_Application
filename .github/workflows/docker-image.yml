@@ -24,7 +24,6 @@ jobs:
       #     docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
       - name: Build Docker image for backend
-        if: github.event_name == 'pull_request'
         run: |
           docker build -t mde:frontend . -f Dockerfile.prod
       
