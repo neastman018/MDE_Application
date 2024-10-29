@@ -5,7 +5,7 @@ import {Box, CssBaseline, Grid} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
 import FeaturedPost from '../components/personcard';
 import DrawerAppBar from '../components/navbar';
-import AboutUsCard from '../components/aboutuscard';
+import AboutUsCard from '../components/aboutUsCard';
 
 
 const theme = extendTheme({
