@@ -23,9 +23,10 @@ jobs:
         run: |
           docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
-      - name: Build Docker image for frontend
+      - name: Build and push Docker image for frontend
         run: |
-          docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
+          docker build -t $DOCKER_HUB_USERNAME/mde-frontend:latest ./frontend -f ./frontend/Dockerfile.prod
+          docker push $DOCKER_HUB_USERNAME/mde-frontend:latest
 
   backend:
     runs-on: ubuntu-latest
@@ -42,7 +43,7 @@ jobs:
         run: |
           docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
-      - name: Build Docker image for backend
+      - name: Build and push Docker image for backend
         run: |
-          docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
-      
+          docker build -t $DOCKER_HUB_USERNAME/mde-backend:latest ./backend -f ./backend/Dockerfile.prod
+          docker push $DOCKER_HUB_USERNAME/mde-backend:latest
