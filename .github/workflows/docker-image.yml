@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: MDE Web Application
 
 on:
   push:
@@ -23,10 +23,10 @@ jobs:
         run: |
           docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
-      - name: Build and push Docker image for frontend
+      - name: Build Docker image for frontend
         run: |
-          docker build -t $DOCKER_HUB_USERNAME/mde-frontend:latest ./frontend -f ./frontend/Dockerfile.prod
-          docker push $DOCKER_HUB_USERNAME/mde-frontend:latest
+          docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
+          docker push $DOCKER_HUB_USERNAME/mde:frontend
 
   backend:
     runs-on: ubuntu-latest
@@ -43,7 +43,8 @@ jobs:
         run: |
           docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
-      - name: Build and push Docker image for backend
+      - name: Build Docker image for backend
         run: |
-          docker build -t $DOCKER_HUB_USERNAME/mde-backend:latest ./backend -f ./backend/Dockerfile.prod
-          docker push $DOCKER_HUB_USERNAME/mde-backend:latest
+          docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
+          docker push $DOCKER_HUB_USERNAME/mde:backend
+
