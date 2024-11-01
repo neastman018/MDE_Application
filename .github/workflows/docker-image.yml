@@ -26,7 +26,7 @@ jobs:
       - name: Build and push frontend image
         run: | #push baby
           echo ${{ secrets.DOCKER_HUB_USERNAME }}
-          docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
+          docker build -t neastman/mde:frontend ./frontend -f ./frontend/Dockerfile.prod
           docker push neastman/mde:frontend
 
 
@@ -51,6 +51,6 @@ jobs:
       - name: Build and push backend image
         run: |
           echo ${{ secrets.DOCKER_HUB_USERNAME }}
-          docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
+          docker build -t neastman/mde:backend ./backend -f ./backend/Dockerfile.prod
           docker push neastman/mde:backend
 
