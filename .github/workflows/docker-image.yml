@@ -25,11 +25,11 @@ jobs:
 
       - name: Build Docker image for frontend
         run: |
-          docker build -t $DOCKER_HUB_USERNAME/mde-frontend:latest ./frontend -f ./frontend/Dockerfile.prod
+          docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
 
       - name: Push Docker image for frontend
         run: |
-          docker push $DOCKER_HUB_USERNAME/mde-frontend:latest
+          docker push $DOCKER_HUB_USERNAME/mde:frontend
 
   backend:
     runs-on: ubuntu-latest
@@ -48,8 +48,8 @@ jobs:
 
       - name: Build Docker image for backend
         run: |
-          docker build -t $DOCKER_HUB_USERNAME/mde-backend:latest ./backend -f ./backend/Dockerfile.prod
+          docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
 
       - name: Push Docker image for backend
         run: |
-          docker push $DOCKER_HUB_USERNAME/mde-backend:latest
+          docker push $DOCKER_HUB_USERNAME/mde:backend
