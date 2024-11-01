@@ -26,11 +26,11 @@ jobs:
         run: |
           docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
 
-        env: #env variables are lost on new run command
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        # env: #env variables are lost on new run command
+        #   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        #   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
-          docker push $DOCKER_HUB_USERNAME/mde:frontend
+          docker push neastman/mde:frontend
 
 
 
@@ -52,8 +52,8 @@ jobs:
         run: |
           docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
 
-        env: #env variables are lost on new run command
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        # env: #env variables are lost on new run command
+        #   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        #   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
-          docker push $DOCKER_HUB_USERNAME/mde:backend
+          docker push neastman/mde:backend
