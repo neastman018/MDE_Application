@@ -17,8 +17,8 @@ const FlipCard = styled(Box)({
 
 // Avoid passing isFlipped to the DOM element
 const FlipCardInner = styled(Box)(({ isflipped }) => ({
-    width: "15vw",
-    height: "8vw",
+    width: "175px",
+    height: "125px",
     transition: "transform 0.6s",
     transformStyle: "preserve-3d",
     transform: isflipped ? "rotateY(180deg)" : "none",

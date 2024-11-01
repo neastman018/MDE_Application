@@ -1,2 +1,4 @@
 node_modules
-.next
+frontend/.next
+backend/app/__pycache__
+backend/app/data

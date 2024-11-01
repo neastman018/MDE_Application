@@ -7,7 +7,7 @@ from datetime import datetime
 import random
 
 num_files = 50
-algorithms = ['A*', 'D*', 'RandomTree', 'A* with ML', 'D* with ML', 'RandomTree with ML']
+algorithms = ['A*', 'D*', 'A Multi']
 floor_plans = ['floor plan 1', 'floor plan 2', 'floor plan 3', 'floor plan 4', 'floor plan 5']
 
 
@@ -19,22 +19,17 @@ for i in range(num_files):
         # Keys cannot have spaces or it will throw a conversion error when trying to query from Mongo
         "Simulation Name": str(i) + "_Test Simulation ",
         # "Simulation Conducted": datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '_' + str(i),
-        "Simulation Conducted": "Test Simulations",
+        "Simulation Conducted": "Test Simulations", # Day Simluation was conducted
         "Algorithm": random.choice(algorithms),
         "Floor Plan": random.choice(floor_plans),
         "Number of Robots": random.randint(1, 20),
         "Number of Nodes": random.randint(1, 500),
-        "Regional Reroute Radius": random.randint(1, 5),
         "simulation results": {
             "Packages/Hour/Robot": random.randint(1, 20),
             "Average Time per Package": random.randint(30, 1000),
-            "Emergency Stops per Obstacle": random.randint(1, 20),
-            "Average Nodes per Path": random.randint(1, 20),
             "Average Length of Path": random.randint(1, 100),
-            "Number of Paths Rerouted per Stop": random.randint(1, 10),
-            "Calculation Time": random.randint(1, 1000),
+            "Average Nodes per Path": random.randint(1, 20),
         },
-        "commit": False
     }
 
     # Specify the directory and filename

@@ -19,19 +19,19 @@ export default function DrawerAppBar({navItems, theme}) {
    
     const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-        <Typography variant="h6" sx={{ my: 2 }}>
-          Senior Design Project: F24-06
-        </Typography>
-        <Divider />
-        <List>
-          {navItems.map((item,index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton sx={{ textAlign: 'center' }}>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Senior Design Project: F24-06
+      </Typography>
+      <Divider />
+      <List>
+        {navItems.map((item, index) => (
+        <ListItem key={index} disablePadding>
+          <ListItemButton sx={{ textAlign: 'center' }} href={item.url}>
+          <ListItemText primary={item.name} />
+          </ListItemButton>
+        </ListItem>
+        ))}
+      </List>
       </Box>
     );
   
