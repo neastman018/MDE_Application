@@ -16,12 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Log in to DockerHub
-      #   env:
-      #     DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      #   run: |
-      #     docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+      - name: Log in to DockerHub
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
       - name: Build Docker image for frontend
         run: |
@@ -35,14 +35,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Log in to DockerHub
-      #   env:
-      #     DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      #   run: |
-      #     docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+      - name: Log in to DockerHub
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
       - name: Build Docker image for backend
         run: |
-          docker build -t mde:frontend ./backend 
+          docker build -t mde:backend ./backend -f ./backend/Dockerfile.prod
       
