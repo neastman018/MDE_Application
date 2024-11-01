@@ -24,7 +24,7 @@ jobs:
           docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 
       - name: Build and push frontend image
-        run: |
+        run: | #push baby
           docker build -t mde:frontend ./frontend -f ./frontend/Dockerfile.prod
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/mde:frontend
 
