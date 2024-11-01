@@ -25,7 +25,6 @@ const theme = extendTheme({
         },
       },
     },
-    // ...other properties
   });
 
   const featuredPosts = [
