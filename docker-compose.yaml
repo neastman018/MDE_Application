@@ -1,6 +1,6 @@
 services:
   frontend:
-    build: ./frontend
+    image: neastman/mde:frontend
     ports:
       - "3000:3000"
     volumes:
@@ -10,7 +10,7 @@ services:
     command: npm run start
 
   backend: # Fast Api Server
-    build: ./backend
+    image: neastman/mde:backend
     ports:
       - "4000:4000"
     volumes:
@@ -42,18 +42,6 @@ services:
       - ME_CONFIG_MONGODB_URL=mongodb://mongoAdmin:m0ng0passw0rd@mongo:27017
     depends_on:
       - mongo
-
-    nginx:
-      image: nginx:latest
-      ports:
-        - "80:80"
-        - "443:443"
-      environment:
-        - NGINX_PORT=80
-      volumes:
-        - ./nginx/config:/etc/nginx/conf.d
-      depends_on:
-        - frontend
 
 volumes:
   mongodata:

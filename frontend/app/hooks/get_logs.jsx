@@ -11,7 +11,7 @@ export const useLogs = (files, tosubmit) => {
 
 export const getLogVariables = async (files, tosubmit) => {
   const response = await axios.post(
-    API_ENDPOINT,
+    `${API_ENDPOINT}/logs`,
     {files, tosubmit},
   );
   return response.data;

@@ -11,7 +11,7 @@ export const useSearch = (search, deleteFile) => {
 
 export const getSearch = async (search, deleteFile) => {
   const response = await axios.post(
-    API_ENDPOINT,
+    `${API_ENDPOINT}/search`,
     { search, deleteFile },
   );
   return response.data;
