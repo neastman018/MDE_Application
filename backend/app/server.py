@@ -67,14 +67,14 @@ class ConnectionManager:
     
 manager = ConnectionManager()
 
-@app.get("/", tags=["todos"])
+@app.get("/api", tags=["todos"])
 async def get_variables(variables: VariableModel) -> dict:
     return {  
         "independent": variables.independent,
         "dependent": variables.dependent  
         }
 
-@app.post("/", tags=["root"])
+@app.post("/api", tags=["root"])
 async def reads(variables: VariableModel):
     print(f" ind:{variables.independent} dep:{variables.dependent}")
 
@@ -90,14 +90,14 @@ async def reads(variables: VariableModel):
 
 
 
-@app.get("/logs", tags=["todos"])
+@app.get("/api/logs", tags=["todos"])
 async def get_variables(variables: LogModel):
     return {
         "files": variables.files,
         "tosubmit": variables.tosubmit
     }
 
-@app.post("/logs", tags=["root"])   
+@app.post("/api/logs", tags=["root"])   
 async def read(variables: LogModel):
     print("_---------------------------------------")
     uploaded = False
@@ -124,13 +124,13 @@ async def read(variables: LogModel):
 
     return JSONResponse(content=to_return)
     
-@app.get("/search", tags=["todos"])
+@app.get("/api/search", tags=["todos"])
 async def get_variables(variables: SearchModel):
     return {  
         "search": variables.search
         }
 
-@app.post("/search", tags=["root"])
+@app.post("/api/search", tags=["root"])
 async def reads(variables: SearchModel):
 
     if variables.deleteFile is type(None):
