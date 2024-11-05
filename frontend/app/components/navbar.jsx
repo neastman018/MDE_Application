@@ -19,7 +19,7 @@ export default function DrawerAppBar({navItems, theme}) {
    
     const drawer = (
       <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2, paddingTop: 10 }}>
         Senior Design Project: F24-06
       </Typography>
       <Divider />

@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react';
-import { Box, CssBaseline, Grid, Typography, Card } from '@mui/material';
+import { Box, CssBaseline, Grid, Typography, Card, useMediaQuery} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme } from '@mui/material/styles';
 import DrawerAppBar from '../components/navbar';
 import FlipCardPicture from '../components/picflipcard';
@@ -79,9 +79,9 @@ const objectiveCards = [
   {
     title: "Create Custom Simulation Environment",
     description: `
-    Due to the framework of the customers simulation environment, access permissions and limited usablity, we experienced a great increase in scope. A key objectice
-    was to create our own simulation environment to test our multi robotic path planning algorithms in. Our simulation environment seeks to mimic the customer simulation
-    as close as possible.
+    Due to the framework, access permissions and limited usablity of the customers simulation environment, we were unable to use it for our testing.
+    Therefore our scope greatly increased as we made our own custom simulation environment that models the robots'
+    real world operation as close as possible.
     ` 
   },
   {
@@ -120,6 +120,8 @@ const objectiveCards = [
   } 
 ]
 export default function ProjectPage() {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Experimental_CssVarsProvider theme={theme}>
         <CssBaseline />
@@ -139,7 +141,7 @@ export default function ProjectPage() {
 
         <Box component="main" sx={{ p: 10 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 10 }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
+            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', height: '25vw' }}>
               <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
                 <Typography variant="h4">
                   About Prime Vision
@@ -153,14 +155,15 @@ export default function ProjectPage() {
                 <Box
                   component="img"
                   sx={{
-                    height: 400,
                     width: '100%',
-                    maxHeight: { xs: 233, md: 400 },
+                    height: '25vw',
+                    maxHeight: { xs: 233, md: 300 },
                     maxWidth: { xs: 350, md: '100%' },
                     paddingLeft: 20
                   }}
                   alt="Prime Vision Robots"
                   src="autographic.png"
+                  objectFit="cover"
                 />
               </Grid>
             </Card>
@@ -189,17 +192,40 @@ export default function ProjectPage() {
           <VideoPlayer 
                 src="rickroll.mp4" 
                 coverphoto="SimEnvironment.png"
-                width="800px" 
-                height="450px" 
+                width= {isMobile ? '300px' : "800px"}
+                height= 'auto'
                 controls 
                 autoplay={false} 
                 loop={true} 
                 muted={false} 
             />
-          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10 }}>
+          <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
+              Our Simulation Environment
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              component="img"
+              src="custom_sim_env.gif"
+              alt="Custom Simulation Environment"
+              sx={{
+                width: isMobile ? '100vw' : "800px", // Set width based on screen size
+                height: 'auto',                     // Maintain aspect ratio
+              }}
+            />
+          </Box>
+         </Box>     
+         <Box component="main" sx={{ p: 2}}>
+          <Box sx={{ padding: 2, justifyContent: 'center' }}>
+          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row" }}>
-              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
+              <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
+              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold',  justifyContent: 'center' }}>
               Current Problems 
               </Typography>
               <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -211,14 +237,17 @@ export default function ProjectPage() {
               </Grid>
               </Box>
             </Card>
+          </Grid>
+          </Box>
+          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
               <Box sx={{ padding: 2, flexDirection: "row" }}>
-              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
+              <Typography variant="h4" justifyContent="center" sx={{ padding: 2, fontWeight: 'bold' }}>
               Project Objectives
               </Typography>
               <Grid container spacing={2} sx={{ padding: 2 }}>
                 {objectiveCards.map((component, index) => (
-                  <Grid item xs={12} md={4} key={index}>
+                  <Grid item xs={12} md={4} key={index} justifyContent="center">
                     <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"}/>
                   </Grid>
                 ))}

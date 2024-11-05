@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react';
-import { Typography, Box, Container, CircularProgress, Button, FormControl, InputLabel, MenuItem, Select, TextField, Autocomplete } from '@mui/material';
+import { extendTheme, useMediaQuery, Typography, Box, CircularProgress, Button, FormControl, InputLabel, MenuItem, Select, TextField, Autocomplete } from '@mui/material';
 import { useGraphVariables } from '../hooks/get_graph.jsx'; // Adjust the import as necessary
 
 const indOptions = ['Algorithm', 'Floor Plan', 'Number of Robots', 'Number of Nodes', 'Regional Reroute Radius'];
@@ -8,12 +8,14 @@ const indOptions = ['Algorithm', 'Floor Plan', 'Number of Robots', 'Number of No
 const depOptions = [
   { choice: 'Packages/Hour/Robot' },
   { choice: 'Average Time per Package' },
-  { choice: 'Emergency Stops per Obstacle' },
-  { choice: 'Average Nodes per Path' },
-  { choice: 'Number of Paths Rerouted per Stop' }
+  { choice: 'Average Length of Path' },
+  { choice: 'Average Nodes per Path' }
 ];
 
 export default function Graphs() {
+  // Determine if the screen width is within the mobile range
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   const [indVar, setIValue] = React.useState('');
   const [depVar, setDValue] = React.useState([]);
 
@@ -26,12 +28,11 @@ export default function Graphs() {
     setIValue(event.target.value);
   };
 
-    const handleChangeDep = (event, newValue) => {
+  const handleChangeDep = (event, newValue) => {
     // Restrict to a maximum of 2 selections
     if (newValue.length <= 3) {
       setDValue(newValue);
     } else {
-      // Optional: Handle the case where more than 2 options are selected (e.g., show a message)
       alert('You can only select up to 2 options.');
     }
   };
@@ -59,15 +60,14 @@ export default function Graphs() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          width: '60vw',
+          width: isMobile ? '90vw' : '70vw',
           height: '60vh',
           border: '2px solid #ccc',
           borderRadius: '8px',
           overflow: 'hidden',
           mb: 2,
         }}
-      >   
-        
+      >
         {isLoading ? (
           <CircularProgress />
         ) : isError ? (
@@ -97,6 +97,24 @@ export default function Graphs() {
               ))}
             </Select>
           </FormControl>
+          {!isMobile && (
+            <FormControl sx={{ width: '100%' }}>
+              <Autocomplete
+                multiple
+                limitTags={2}
+                id="multiple-limit-tags"
+                options={depOptions}
+                getOptionLabel={(option) => option.choice}
+                value={depVar}
+                onChange={handleChangeDep}
+                renderInput={(params) => (
+                  <TextField {...params} label="Dependent Variable" />
+                )}
+              />
+            </FormControl>
+          )}
+        </Box>
+        {isMobile && (
           <FormControl sx={{ width: '100%' }}>
             <Autocomplete
               multiple
@@ -107,12 +125,14 @@ export default function Graphs() {
               value={depVar}
               onChange={handleChangeDep}
               renderInput={(params) => (
-                <TextField {...params} label="Dependent Variable"/>
+                <TextField {...params} label="Dependent Variable" />
               )}
             />
           </FormControl>
-        </Box>
-        <Button variant="contained" sx={{ mt: 0, width: "20%"}} onClick={handleSubmit}>Show Graph</Button>
+        )}
+        <Button variant="contained" sx={{ mt: 0, width: isMobile ? "100px" : "200px" }} onClick={handleSubmit}>
+          Show Graph
+        </Button>
       </Box>
     </Box>
   );

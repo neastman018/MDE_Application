@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react';
-import {Box, CssBaseline, Toolbar} from '@mui/material';
+import {Box, CssBaseline, Toolbar, useMediaQuery} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
 import DrawerAppBar from '../components/navbar';
 import Graphs from '../components/graphdisplay';
@@ -40,9 +40,9 @@ const futureResearchCards = [
   {
     title: "Create Custom Simulation Environment",
     description: `
-    Due to the framework of the customers simulation environment, access permissions and limited usablity, we experienced a great increase in scope. A key objectice
-    was to create our own simulation environment to test our multi robotic path planning algorithms in. Our simulation environment seeks to mimic the customer simulation
-    as close as possible.
+    Due to the framework, access permissions and limited usablity of the customers simulation environment, we were unable to use it for our testing.
+    Therefore our scope greatly increased as we made our own custom simulation environment that models the robots'
+    real world operation as close as possible.
     ` 
   },
   {
@@ -81,6 +81,7 @@ const futureResearchCards = [
   } 
 ]
 export default function ResultsPage() {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
   return (
@@ -88,12 +89,12 @@ export default function ResultsPage() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <DrawerAppBar navItems={navItems} theme={theme}/>
-      <SimsDrawer />
+      {!isMobile && <SimsDrawer />}
       <Toolbar />
-      <Graphs />
+      <Graphs isMobile={isMobile}/>
     </Box>
     <Box sx={{ width:"75vw", marginX: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 2 }}>
-      <SlideDownBox futureResearchCards={futureResearchCards}/>
+      <SlideDownBox futureResearchCards={futureResearchCards} isMobile={isMobile}/>
     </Box>
     </Experimental_CssVarsProvider>
   );

@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import {Box, CssBaseline, Grid} from '@mui/material';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} from '@mui/material/styles';
-import FeaturedPost from '../components/personcard';
 import DrawerAppBar from '../components/navbar';
 import AboutUsCard from '../components/aboutUsCard';
 
@@ -26,40 +25,6 @@ const theme = extendTheme({
       },
     },
   });
-
-  const featuredPosts = [
-    {
-      title: 'Nic Cicerella',
-      major: 'CPE - Machine Learning',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random?wallpapers',
-      imageLabel: 'Image Text',
-    },
-    {
-      title: 'Post title',
-      major: 'Nov 11',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random?wallpapers',
-      imageLabel: 'Image Text',
-    },
-    {
-      title: 'Post title',
-      major: 'Nov 11',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random?wallpapers',
-      imageLabel: 'Image Text',
-    },
-    {
-      title: 'Nick Eastman',
-      major: 'EE - Energy and Power Electronic Systems',
-      description: 'Test',
-      image: 'Logo.png',
-      imageLabel: 'Image Text',
-    },
-  ];
 
 const navItems = [
   {name:'Home', url:'.'}, 
@@ -97,7 +62,7 @@ const aboutUsCards = [
     major: "CPE - Control Robotics and Autonomy",
     role: "Algorithm and Simulation Environment Developer",
     alt: "Haley Rindfleisch",
-    image: "HaleyRindfleisch.png",
+    image: "HaleyRindfliesch.png",
     description: `
     Haley is studying computer engineering and will be graduating in December of 2024. After graduation she will
     continue here studies at Virginia Tech, working towards her Masters of Science in Computer Engineering. She will 

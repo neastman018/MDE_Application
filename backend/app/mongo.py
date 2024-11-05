@@ -429,8 +429,8 @@ class Mongo:
                 sb.lineplot(data=dataset, x=ind, y="data", hue="Legend", color="#861F41", legend=False)
           
             plt.xlabel(ind)
-            plt.ylabel(f"Average {dep}")
-            plt.title(f"Average {dep} vs {ind}")
+            plt.ylabel(f"{dep}")
+            plt.title(f"{dep} vs {ind}")
             plt.show()
 
             plt.savefig(os.path.join('app/data', 'graph.png'))

@@ -56,7 +56,7 @@ export default function FlipCardComponent({post, width, height}) {
     };
 
     const handleClicked = () => {
-        window.location.href = post.link;
+        if (post.link) { window.location.href = post.link; }
     };
 
     return (

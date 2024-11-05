@@ -5,7 +5,7 @@ import FlipCardComponent from './problemflipcards';
 
 
 
-export default function SlideDownBox({futureResearchCards}) {
+export default function SlideDownBox({futureResearchCards, isMobile}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -15,14 +15,25 @@ export default function SlideDownBox({futureResearchCards}) {
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', width: '85vw', textAlign: 'center' }}>
       {/* Header Box with Title and Button */}
+
+      
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: 2 }}>
         <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
           Future Research
         </Typography>
+        {!isMobile && ( //Change the Location of the info button on mobile phones to be below
         <Button onClick={handleClick}>
-          <InfoIcon />
+            <InfoIcon />
         </Button>
+        )}
       </Box>
+      {isMobile && (
+        <Button onClick={handleClick}>
+            <InfoIcon />
+        </Button>
+        )}
+
+      
   
       {/* Collapsible Content Below */}
       <Collapse in={open} timeout="auto" unmountOnExit>
