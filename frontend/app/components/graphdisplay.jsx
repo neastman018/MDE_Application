@@ -6,10 +6,10 @@ import { useGraphVariables } from '../hooks/get_graph.jsx'; // Adjust the import
 const indOptions = ['Algorithm', 'Floor Plan', 'Number of Robots', 'Number of Nodes', 'Regional Reroute Radius'];
 
 const depOptions = [
-  { choice: 'Packages/Hour/Robot' },
-  { choice: 'Average Time per Package' },
-  { choice: 'Average Length of Path' },
-  { choice: 'Average Nodes per Path' }
+  { choice: 'Time' },
+  { choice: 'Total Distance' },
+  { choice: 'Total Dropoffs' },
+  { choice: 'Total Planned Dropoffs' }
 ];
 
 export default function Graphs() {
