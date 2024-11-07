@@ -12,5 +12,7 @@ EXPOSE 3000
 
 # build the app
 # RUN npm run build
+# Copy in the .env.development file
+COPY .env.development .env.development
 
 CMD ["npm", "run", "dev"]
