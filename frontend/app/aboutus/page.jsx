@@ -58,7 +58,7 @@ const aboutUsCards = [
     `,
   },
   {
-    name: "Haley Rindfliech",
+    name: "Haley Rindfliesch",
     major: "CPE - Control Robotics and Autonomy",
     role: "Algorithm and Simulation Environment Developer",
     alt: "Haley Rindfleisch",

@@ -46,14 +46,14 @@ const overallCards = [
     title: "The Problem",
     description: `
         Prime Visions current robotic path planning system is inefficient and causes bottlenecks in the warehouse.
-        This causes the robots to deliever less packages which results in more robots or time required to
+        This causes the robots to deliver less packages which results in more robots or time required to
         devlier packages.
         `,
   },
   {
     title: "Our Solution",
     description: `
-        We will investigate different multi-robot path planning algorithms and strageties to increase the robot's efficiency.
+        We will investigate different multi-robot path planning algorithms and strategies to increase the robot's efficiency.
         Through this process we hope to be able to make recommendations to Prime Vision to improve their path planning
         system and increase package sorting speeds. 
         `,
@@ -71,7 +71,7 @@ const problemCards = [
   },
   {
     title: "No Obstacle Avoidance",
-    description: "Robots can detect obstacles but have no way to route around them. Currently they will stop and wait for the obstacle to move, which causes delays",
+    description: "Robots can detect obstacles but have no way to route around them. Currently they will stop and wait for the obstacle to move, which causes delays.",
   },
 ];
 
@@ -95,13 +95,13 @@ const objectiveCards = [
     title: "Optimize Robot Path Planning",
     description: `
     We optimized the robots path planning to reduce the time it takes to deliver packages. We did this by implemening cutting edge solutions to multi-robotic path planning algorithms.
-    We hoped to implement local path replanning and obstacle avoidance, however due to changes a scope and impending deadlines we were not able to pursue these avenues.
+    We hoped to implement local path replanning and obstacle avoidance, however due to changes in scope and impending deadlines we were not able to pursue these avenues.
     `
   },
   {
     title: "Create a Web Application to Showcase Our Results",
     description: `
-    We created a web application to showcase our results. Our hopes is that other researchers and developers tackling similar problems can use our reasearch to further their own projects.
+    We created a web application to showcase our results. Our hope is that other researchers and developers tackling similar problems can use our reasearch to further their own projects.
     `
   },
   {
@@ -189,36 +189,6 @@ export default function ProjectPage() {
           <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
               Customers Simulation Environment
           </Typography>
-          <VideoPlayer 
-                src="rickroll.mp4" 
-                coverphoto="SimEnvironment.png"
-                width= {isMobile ? '300px' : "800px"}
-                height= 'auto'
-                controls 
-                autoplay={false} 
-                loop={true} 
-                muted={false} 
-            />
-          <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
-              Our Simulation Environment
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src="custom_sim_env.gif"
-              alt="Custom Simulation Environment"
-              sx={{
-                width: isMobile ? '100vw' : "800px", // Set width based on screen size
-                height: 'auto',                     // Maintain aspect ratio
-              }}
-            />
-          </Box>
          </Box>     
          <Box component="main" sx={{ p: 2}}>
           <Box sx={{ padding: 2, justifyContent: 'center' }}>
@@ -255,6 +225,36 @@ export default function ProjectPage() {
               </Box>
             </Card>
           </Grid>
+          <VideoPlayer 
+                src="rickroll.mp4" 
+                coverphoto="SimEnvironment.png"
+                width= {isMobile ? '300px' : "800px"}
+                height= 'auto'
+                controls 
+                autoplay={false} 
+                loop={true} 
+                muted={false} 
+            />
+          <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
+              Our Simulation Environment
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              component="img"
+              src="custom_sim_env.gif"
+              alt="Custom Simulation Environment"
+              sx={{
+                width: isMobile ? '100vw' : "800px", // Set width based on screen size
+                height: 'auto',                     // Maintain aspect ratio
+              }}
+            />
+          </Box>
         </Box>
 
     </Experimental_CssVarsProvider>

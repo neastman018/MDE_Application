@@ -463,7 +463,7 @@ class Mongo:
             plt.title(f"Average {dep} vs {ind}", fontsize=self.title_size)
             plt.show()
 
-            plt.savefig(os.path.join('app/data', 'graph.png'))            
+            plt.savefig(os.path.join('app', 'graph.png'))            
             # Convert the graph to a PNG image and then encode it to base64
             buffer = BytesIO()
             plt.savefig(buffer, format="png")
