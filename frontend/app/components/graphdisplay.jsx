@@ -9,7 +9,7 @@ const depOptions = [
   { choice: 'Time' },
   { choice: 'Total Distance' },
   { choice: 'Total Dropoffs' },
-  { choice: 'Total Planned Dropoffs' }
+  { choice: 'Total Planned Drops' }
 ];
 
 export default function Graphs() {
