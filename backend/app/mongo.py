@@ -65,7 +65,7 @@ class Mongo:
     Function to change the commit variable to true for all the JSON files in the data folder
     """
     def commit_logs(self):
-        data_folder = 'app/data'
+        data_folder = 'app'
 
         # Get all JSON files in the data folder
         file_pattern = os.path.join(data_folder, '*.json')
@@ -129,55 +129,7 @@ class Mongo:
         if files_commited > 0:
             return True
 
-    # def upload_logs(self):
-    #     files_commited = 0
-
-    #     data_folder = 'app/data'
-    #     cwd = os.getcwd()
-    #     print(f"Uploading files from: {cwd + '/' + data_folder}")
-
-    #     # Get all JSON files in the data folder
-    #     file_pattern = os.path.join(data_folder, '*.json')
-    #     json_files = glob.glob(file_pattern)
-
-    #     for filename in json_files:
-
-    #         try:
-    #             # Get the data from the JSON file
-    #             with open(filename) as file:
-    #                 data = json.load(file)
-
-    #             # Check if the commit variable is true
-    #             if data.get('commit'):
-    #                 try:
-    #                     # Insert the data into the database
-    #                     insert_result = self.simStats.insert_one(data)
-
-    #                     # If the data is inserted successfully, remove the file
-    #                     if insert_result.acknowledged:
-    #                         print(f"{Fore.GREEN}Data from {filename} inserted successfully{Style.RESET_ALL}")
-    #                         files_commited += 1
-    #                         os.remove(filename)
-    #                     else:
-    #                         print(f"{Fore.RED}Data insertion failed for {filename}{Style.RESET_ALL}")
-    #                 except pymongo.errors.PyMongoError as e:
-    #                     print(f"{Fore.RED}Database error for {filename}: {e}{Style.RESET_ALL}")
-    #                 except FileNotFoundError:
-    #                     print(f"{Fore.RED}The file {filename} does not exist{Style.RESET_ALL}")
-    #                 except json.JSONDecodeError:
-    #                     print(f"{Fore.RED}Error decoding JSON from the file {filename}{Style.RESET_ALL}")
-    #                 except OSError as e:
-    #                     print(f"{Fore.RED}OS error for {filename}: {e}{Style.RESET_ALL}")           
-    #         except pymongo.errors.PyMongoError as e:
-    #             print(f"{Fore.RED}Database error for {filename}: {e}{Style.RESET_ALL}")
-    #         except FileNotFoundError:
-    #             print(f"{Fore.RED}The file {filename} does not exist{Style.RESET_ALL}")
-    #         except json.JSONDecodeError:
-    #             print(f"{Fore.RED}Error decoding JSON from the file {filename}{Style.RESET_ALL}")
-    #         except OSError as e:
-    #             print(f"{Fore.RED}OS error for {filename}: {e}{Style.RESET_ALL}")
-    #     print(f"{Fore.GREEN}Total files uploaded: {files_commited}{Style.RESET_ALL}")
-
+ 
     """ Simple Method that usese the most basic commands to see if I am even connected to the database"""
     def basic_find(self):
         data = self.simStats.find()
@@ -379,7 +331,7 @@ class Mongo:
             plt.title(f"{dep} vs {ind}", fontsize=self.title_size)
             plt.show()
             # Save the plot to a BytesIO object
-            plt.savefig(os.path.join('app/data', 'graph.png'))
+            plt.savefig(os.path.join('app', 'graph.png'))
             
             # Convert the graph to a PNG image and then encode it to base64
             buffer = BytesIO()
@@ -433,7 +385,7 @@ class Mongo:
             plt.title(f"{dep} vs {ind}")
             plt.show()
 
-            plt.savefig(os.path.join('app/data', 'graph.png'))
+            plt.savefig(os.path.join('app', 'graph.png'))
 
             # Convert the graph to a PNG image and then encode it to base64
             buffer = BytesIO()
