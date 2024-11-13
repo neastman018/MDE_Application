@@ -38,47 +38,27 @@ const navItems = [
 
 const futureResearchCards = [
   {
-    title: "Create Custom Simulation Environment",
+    title: "Regional Rerouting on Encountering Obstacles",
     description: `
-    Due to the framework, access permissions and limited usablity of the customers simulation environment, we were unable to use it for our testing.
-    Therefore our scope greatly increased as we made our own custom simulation environment that models the robots'
-    real world operation as close as possible.
+    We would like to have implemented more sophiscated rerouting techniques to better avoid obstacles. This is one of the problems
+    that currently slows down the robots significantly. However after our change in scope we were not able to pursue
+    the avenues we outlined in our initial research.
     ` 
   },
   {
-    title: "Research and Implement Multi-Robot Path Planning Algorithms",
+    title: "Dynamic Node Resolution",
     description: `
-    We researched the cutting edge of multi-robot path planning algorithms to find solutions to best fit the customers needs. We then implemented them in our simulation environment
-    to test their effectiveness against key, quantitative metrics.
+    In order to better improve the robots movement in high traffic areas or around obstalces, we were hoping to be able to 
+    dynamically increase the resolution of nodes. This would of allowed the robots to move with great accuracy which would
+    reduce robots interfering with each other.
     `
   },
   {
-    title: "Optimize Robot Path Planning",
+    title: "Algorithm to Choose Optimal Pickup Location",
     description: `
-    We optimized the robots path planning to reduce the time it takes to deliver packages. We did this by implemening cutting edge solutions to multi-robotic path planning algorithms.
-    We hoped to implement local path replanning and obstacle avoidance, however due to changes a scope and impending deadlines we were not able to pursue these avenues.
+    Within a warehouse there are multiple places a robot can pick up a package. We hoped to implement and algorithm that would
     `
   },
-  {
-    title: "Create a Web Application to Showcase Our Results",
-    description: `
-    We created a web application to showcase our results. Our hopes is that other researchers and developers tackling similar problems can use our reasearch to further their own projects.
-    `
-  },
-  {
-    title: "Create Graphics to Visualize Our Results",
-    description: `
-    A key customer requirement was to create graphics that would help viewers understand our data and key takeaways. These graphics were created to update automatically with new data, 
-    as well as be interactive to allow for a more engaging experience.
-    `
-  },
-  {
-    title: "Have a Database to Store Simulation Data",
-    description: `
-    All of our simulation logs are stored on a MongoDB database. This allows us long term storage as well as easy access to the data. Addtionally this database can be manipulated
-    through the website, to upload, store, view and delete simulation logs.
-    `
-  } 
 ]
 export default function ResultsPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

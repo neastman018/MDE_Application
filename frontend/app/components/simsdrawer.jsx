@@ -250,7 +250,7 @@ export default function PersistentDrawerLeft() {
             <Typography color="error">Error Getting Files</Typography>
         ) : search_results?.json_files ? (
           <Box>
-            {search_results.file_names.map((fileName, index) => (
+            {search_results.file_name.map((fileName, index) => (
               <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                 <Button
                   onClick={() => handleDeleteFile(index)}

@@ -5,6 +5,7 @@ import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme }
 import DrawerAppBar from '../components/navbar';
 import FlipCardPicture from '../components/picflipcard';
 import FlipCardComponent from '../components/problemflipcards';
+import SimFlipCard from '../components/simflipcard';
 import VideoPlayer from '../components/videoplayer';
 
 const theme = extendTheme({
@@ -41,6 +42,15 @@ const picCards = [
   }
 ];
 
+const simCards = [
+  {
+    frontTitle: 'Customer Simulation Environment',
+    frontPicture: 'custom_sim_env_looped.gif',
+    backTitle: 'Our Custom Simulation Environment',
+    backPicture: 'custom_sim_env_looped.gif',
+  }
+]
+
 const overallCards = [
   {
     title: "The Problem",
@@ -53,7 +63,7 @@ const overallCards = [
   {
     title: "Our Solution",
     description: `
-        We will investigate different multi-robot path planning algorithms and strategies to increase the robot's efficiency.
+        We investigated different multi-robot path planning algorithms and strategies to increase the robot's efficiency.
         Through this process we hope to be able to make recommendations to Prime Vision to improve their path planning
         system and increase package sorting speeds. 
         `,
@@ -168,7 +178,7 @@ export default function ProjectPage() {
               </Grid>
             </Card>
           </Grid>
-          <Grid container spacing={4} sx={{ paddingBottom: 10 }}>
+          <Grid container spacing={4} sx={{ paddingBottom: 0 }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
               <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
                 <Typography variant="h4">
@@ -186,16 +196,13 @@ export default function ProjectPage() {
               </Grid>
             </Card>
           </Grid>
-          <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
-              Customers Simulation Environment
-          </Typography>
          </Box>     
-         <Box component="main" sx={{ p: 2}}>
+         <Box component="main" sx={{ p: 0}}>
           <Box sx={{ padding: 2, justifyContent: 'center' }}>
           <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
               <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
-              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold',  justifyContent: 'center' }}>
+              <Typography variant="h4" sx={{ padding: 0, fontWeight: 'bold',  justifyContent: 'center' }}>
               Current Problems 
               </Typography>
               <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -225,36 +232,8 @@ export default function ProjectPage() {
               </Box>
             </Card>
           </Grid>
-          <VideoPlayer 
-                src="rickroll.mp4" 
-                coverphoto="SimEnvironment.png"
-                width= {isMobile ? '300px' : "800px"}
-                height= 'auto'
-                controls 
-                autoplay={false} 
-                loop={true} 
-                muted={false} 
-            />
-          <Typography variant="h5" sx={{ padding: 2, fontWeight: 'bold', textAlign:"center" }}>
-              Our Simulation Environment
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src="custom_sim_env.gif"
-              alt="Custom Simulation Environment"
-              sx={{
-                width: isMobile ? '100vw' : "800px", // Set width based on screen size
-                height: 'auto',                     // Maintain aspect ratio
-              }}
-            />
-          </Box>
+          <SimFlipCard post={simCards[0]}/>
+        
         </Box>
 
     </Experimental_CssVarsProvider>
