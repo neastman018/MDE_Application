@@ -322,7 +322,7 @@ class Mongo:
             bound_y = max_y - (max_y % 5) + 5 # rounds max_y up to the nearest multiple of 5
 
             # Create a bar chart using seaborn
-            sb.barplot(data=dataset, x=ind, y=dep, color="#861F41")
+            sb.barplot(data=dataset, x=ind, y=dep, color="#AA0000")
 
             plt.xlabel(ind, fontsize=self.label_size)
             plt.ylim(0, bound_y)
