@@ -149,7 +149,7 @@ async def reads(variables: SearchModel):
         mongo.clear_logs()
         print("Deleting All Files")
         
-    file_names = [file["_id"] for file in files_to_return]
+    file_names = [file["Simulation Name"] for file in files_to_return]
     # Assuming files_to_return contains MongoDB documents
     json_files = [json.dumps({**file, "_id": str(file["_id"])}) for file in files_to_return]
     print(f"Number of Json Files Returned: {len(files_to_return)}")
