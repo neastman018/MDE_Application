@@ -12,10 +12,8 @@ import pymongo.errors
 import seaborn as sb
 import base64
 from io import BytesIO
-from datetime import datetime
-from random import random
-algorithms = ['A*', 'D*', 'RandomTree', 'A* with ML', 'D* with ML', 'RandomTree with ML']
-floor_plans = ['floor plan 1', 'floor plan 2', 'floor plan 3', 'floor plan 4', 'floor plan 5']
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 
 """
@@ -193,6 +191,7 @@ class Mongo:
 
         # find the number of different values there is for the independent variablesi
         print(f"{Fore.GREEN}ind: {ind}{Style.RESET_ALL}")
+
         data = self.simStats.find({ind: {"$exists": True}})
 
         # Used for testing, commit out when sure it works properly
@@ -310,7 +309,6 @@ class Mongo:
 # Graphing Methods
 #=============================================================================================================================================================================================
 
-    
 
     def bar_graph(self, ind, dep):
         dataset = pd.DataFrame(self.grab_all_data(ind, dep))
@@ -370,6 +368,65 @@ class Mongo:
             buffer.close()
 
             return base64.b64encode(image_png).decode('utf-8')
+        
+    def graph_data(self, ind, dep):
+        colors = ["#861F41", "#E5751F", "#75787B"]
+        df = pd.DataFrame(self.grab_all_data(ind, dep))
+
+
+        # Create a plot
+        plt.figure(figsize=(10, 6))
+        
+        # Define a color mapping for each algorithm
+        algorithms = df["Legend"].unique()
+        color_map = {algorithm: colors[i] for i, algorithm in enumerate(algorithms)}
+
+        # Plot scatter points with the respective color for each algorithm
+        for algorithm in algorithms:
+            df_alg = df[df["Legend"] == algorithm]
+            sb.scatterplot(data=df_alg, x=ind, y=dep, color=color_map[algorithm], label=algorithm, s=50)
+        
+        # Fit and plot quadratic best-fit lines for each algorithm
+        for algorithm in algorithms:
+            df_alg = df[df["Algorithm"] == algorithm].dropna()
+
+            # Reshape the independent variable for sklearn
+            X = df_alg[ind].values.reshape(-1, 1)
+            y = df_alg[dep].values
+
+            # Apply quadratic transformation
+            poly = PolynomialFeatures(degree=2)
+            X_poly = poly.fit_transform(X)
+
+            # Fit a linear regression model to the transformed data
+            model = LinearRegression()
+            model.fit(X_poly, y)
+
+            # Generate predicted values for plotting
+            X_range = np.linspace(X.min(), X.max(), 100).reshape(-1, 1)
+            X_range_poly = poly.transform(X_range)
+            y_pred = model.predict(X_range_poly)
+
+            # Plot the quadratic best-fit line with the same color as the scatter points
+            plt.plot(X_range, y_pred, color=color_map[algorithm], linewidth=1.5)
+
+        plt.title(f'{dep} vs {ind}')
+        plt.xlabel(ind)
+        plt.ylabel(dep)
+        plt.legend(title="Algorithm")
+        plt.grid(True)
+        plt.show()
+
+        plt.savefig(os.path.join('app', 'graph.png'))
+
+        # Convert the graph to a PNG image and then encode it to base64
+        buffer = BytesIO()
+        plt.savefig(buffer, format="png")
+        buffer.seek(0)
+        image_png = buffer.getvalue()
+        buffer.close()
+        return base64.b64encode(image_png).decode('utf-8')
+    
 
 
     def line_graph(self, ind, dep):
@@ -428,20 +485,20 @@ class Mongo:
     Method that brings together the line graph and bar graph methods based on the independent variable selected
     Also want it 
     """
-    def graph_data(self, ind, dep):
-        # If dep is a list with a single value make it a string
-        if isinstance(dep, list) and len(dep) == 1:
-            print(f"dep (list) (early) = {dep}")
-            dep = dep[0]
-            print(f"dep (str) (early) = {dep}")
+    # def graph_data(self, ind, dep):
+    #     # If dep is a list with a single value make it a string
+    #     if isinstance(dep, list) and len(dep) == 1:
+    #         print(f"dep (list) (early) = {dep}")
+    #         dep = dep[0]
+    #         print(f"dep (str) (early) = {dep}")
             
 
-        if ind == "Algorithm" or ind == "Floor Plan":
-            print("Making Bar Graph")
-            return self.bar_graph(ind, dep)
-        elif ind == "Number of Robots" or ind == "Regional Reroute Radius" or ind == "Number of Nodes" or ind == "Number of Obstacles":
-            print("Making Line Graph")
-            return self.line_graph(ind, dep)
+    #     if ind == "Algorithm" or ind == "Floor Plan":
+    #         print("Making Bar Graph")
+    #         return self.bar_graph(ind, dep)
+    #     elif ind == "Number of Robots" or ind == "Regional Reroute Radius" or ind == "Number of Nodes" or ind == "Number of Obstacles":
+    #         print("Making Line Graph")
+    #         return self.line_graph(ind, dep)
             
 
 if __name__ == "__main__":
