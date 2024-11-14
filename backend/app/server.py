@@ -154,7 +154,9 @@ async def reads(variables: SearchModel):
     # Assuming files_to_return contains MongoDB documents
     json_files = [json.dumps({**file, "_id": str(file["_id"])}) for file in files_to_return]
     print(f"Number of Json Files Returned: {len(files_to_return)}")
-    
+    print("===================Documents===================")
+    for file in json_files:
+        print(file)
     to_return = {
         "file_names": file_names,
         "json_files": json_files

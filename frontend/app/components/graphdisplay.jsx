@@ -3,13 +3,13 @@ import * as React from 'react';
 import { extendTheme, useMediaQuery, Typography, Box, CircularProgress, Button, FormControl, InputLabel, MenuItem, Select, TextField, Autocomplete } from '@mui/material';
 import { useGraphVariables } from '../hooks/get_graph.jsx'; // Adjust the import as necessary
 
-const indOptions = ['Algorithm', 'Floor Plan', 'Number of Robots', 'Number of Nodes', 'Regional Reroute Radius'];
+const indOptions = ["Number of Robots", "Total Time", "Total Distance", "Total Dropoffs"];
 
 const depOptions = [
-  { choice: 'Time' },
-  { choice: 'Total Distance' },
-  { choice: 'Total Dropoffs' },
-  { choice: 'Total Planned Drops' }
+  { choice: 'Total E-Stops' },
+  { choice: 'Parcels per Hour per Robot' },
+  { choice: 'Average Time per Agent' },
+  { choice: 'Total Parcels per Hour' }
 ];
 
 export default function Graphs() {

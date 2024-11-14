@@ -293,7 +293,6 @@ class Mongo:
                 if search_str in str(doc):
                     numFiles += 1
                     files.append(doc)
-                    print(doc)
 
         except pymongo.errors.PyMongoError as e:
             print(f"{Fore.RED}Error retrieving logs from the database{Style.RESET_ALL}")
