@@ -197,43 +197,42 @@ export default function ProjectPage() {
             </Card>
           </Grid>
          </Box>     
-         <Box component="main" sx={{ p: 0}}>
-          <Box sx={{ padding: 2, justifyContent: 'center' }}>
+         <Box component="main" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 0 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
-              <Typography variant="h4" sx={{ padding: 0, fontWeight: 'bold',  justifyContent: 'center' }}>
-              Current Problems 
-              </Typography>
-              <Grid container spacing={2} sx={{ padding: 2 }}>
-                {problemCards.map((component, index) => (
-                  <Grid item xs={12} md={4} key={index}>
-                    <FlipCardComponent key={index} post={component} width={"400px"} height={"200px"}/>
-                  </Grid>
-                ))}
-              </Grid>
+            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100%', textAlign: 'center' }}>
+              <Box sx={{ padding: 2, flexDirection: "row", width: '100%' }}>
+                <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold', textAlign: 'center' }}>
+                  Current Problems
+                </Typography>
+                <Grid container spacing={2} sx={{ padding: 2, justifyContent: 'center' }}>
+                  {problemCards.map((component, index) => (
+                    <Grid item xs={12} md={4} key={index}>
+                      <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"} />
+                    </Grid>
+                  ))}
+                </Grid>
               </Box>
             </Card>
           </Grid>
-          </Box>
+
           <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row" }}>
-              <Typography variant="h4" justifyContent="center" sx={{ padding: 2, fontWeight: 'bold' }}>
-              Project Objectives
-              </Typography>
-              <Grid container spacing={2} sx={{ padding: 2 }}>
-                {objectiveCards.map((component, index) => (
-                  <Grid item xs={12} md={4} key={index} justifyContent="center">
-                    <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"}/>
-                  </Grid>
-                ))}
-              </Grid>
+            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100%', textAlign: 'center' }}>
+              <Box sx={{ padding: 2, flexDirection: "row", width: '100%' }}>
+                <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold', textAlign: 'center' }}>
+                  Project Objectives
+                </Typography>
+                <Grid container spacing={2} sx={{ padding: 2, justifyContent: 'center' }}>
+                  {objectiveCards.map((component, index) => (
+                    <Grid item xs={12} md={4} key={index}>
+                      <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"} />
+                    </Grid>
+                  ))}
+                </Grid>
               </Box>
             </Card>
           </Grid>
-          <SimFlipCard post={simCards[0]}/>
-        
+
+          <SimFlipCard post={simCards[0]} />
         </Box>
 
     </Experimental_CssVarsProvider>
