@@ -155,7 +155,7 @@ class Mongo:
     ind Example: {'algorithm': 'A*'}
     dep Example: {'avgTimePerPackage': 1}
     """
-    def grab_data(self, ind:dict, dep:dict):
+    def grab_data(self, alg:str, ind:dict, dep:dict):
         # dep_term appends the name of the dependent variable to the string 'simulation results. to find in the database'
         dep_term = 'simulation results.' + list(dep.keys())[0]
         
@@ -167,7 +167,8 @@ class Mongo:
         if isinstance(value, np.int32) or isinstance(value, np.int64):
             value = int(value)
              
-        data = self.simStats.find({key: value}, {dep_term: 1})
+        data = self.simStats.find({key: value, "Algorithm": alg}, {dep_term: 1})
+
         for doc in data:
             numbers.append(doc['simulation results'][list(dep.keys())[0]])
         
@@ -177,8 +178,8 @@ class Mongo:
     """
     Does the same thing as grab_data but averages the data
     """
-    def grab_avg_data(self, ind:dict, dep:dict):
-        data = self.grab_data(ind, dep)
+    def grab_avg_data(self, alg:str, ind:dict, dep:dict):
+        data = self.grab_data(alg, ind, dep)
         return sum(data)/len(data)
 
     """
@@ -220,35 +221,58 @@ class Mongo:
     ind Example: 'algorithm'
     deps Example: ['avgTimePerPackage', 'packagesHourRobots']
     """
-    def grab_multiple_dependents(self, ind:str, deps:list):
-      
-        search_results = {ind: [], "data": [], "Legend": []}
+    # def grab_multiple_dependents(self, ind:str, deps:list):
+    #     search_results = {ind: [], "data": [], "Legend": []}
+
+    #     data = self.simStats.find({ind: {"$exists": True}})
+    #     variable_values = np.array(list(set([doc[ind] for doc in data])))    
+    #     for dep in deps:
+    #         for var in variable_values:
+    #             search_results[ind].append(var)
+    #             search_results["data"].append(round(self.grab_avg_data({ind: var}, {dep: 1}),1))
+    #             search_results["Legend"].append(dep)
+         
+    #     print(f"search_results = {search_results}")
+    #     return search_results
+
+    def grab_multiple_dependents(self, ind:str, dep:list):
+        if isinstance(dep, list):
+            dep = dep[0]
+
+        alg_list = []
+        ind_counts = []
+        dep_counts = [] 
 
         data = self.simStats.find({ind: {"$exists": True}})
+        algorithm_values = np.array(list(set([doc["Algorithm"] for doc in data])))
         variable_values = np.array(list(set([doc[ind] for doc in data])))    
-        for dep in deps:
+
+        for alg in algorithm_values:
             for var in variable_values:
-                search_results[ind].append(var)
-                search_results["data"].append(round(self.grab_avg_data({ind: var}, {dep: 1}),1))
-                search_results["Legend"].append(dep)
+                alg_list.append(alg)
+                ind_counts.append(var)
+                dep_counts.append(round(self.grab_avg_data(alg, {ind: var}, {dep: 1}),2))
+
+
+
          
-        print(f"search_results = {search_results}")
-        return search_results
+        df = pd.DataFrame({"Algorithm": alg_list, ind: ind_counts, dep: dep_counts})
+        return df
 
     """ 
     Combines the two previous methods into one method based on user input 
     when uploading from the website the deps is always a list, therefore grab_multiple_dependents is always called
     """
-    def grab_all_data(self, ind: str, deps):
-        if isinstance(deps, str): #if dep is string (only happens during testing w/o frontend)
-            print(f"Grabbing single dependent variable (str): {deps}")
-            return self.grab_single_dependent(ind, deps)
+    def grab_all_data(self, ind: str, dep: str):
+        if isinstance(dep, str): #if dep is string (only happens during testing w/o frontend)
+            print(f"Grabbing single dependent variable (str): {dep}")
+            return self.grab_single_dependent(ind, dep)
         # elif isinstance(deps, list) and len(deps) == 1: #happens if frontend only selects 1 dependent variable
         #     print(f"Grabbing single dependent variables (list): {deps}")
         #     return self.grab_single_dependent(ind, deps)
-        elif isinstance(deps, list): #happends if frontend selects multiple dependent variables
-            print(f"Grabbing multiple dependent variables: {deps}")
-            return self.grab_multiple_dependents(ind, deps)
+        elif isinstance(dep, list): #happends if frontend selects multiple dependent variables
+            print(f"Grabbing multiple dependent variables: {dep}")
+            return self.grab_multiple_dependents(ind, dep)
         else: 
             print("Invalid dependent variable type")
             return []
@@ -375,7 +399,8 @@ class Mongo:
         
     def graph_data(self, ind, dep):
         colors = ["#861F41", "#E5751F", "#75787B"]
-        df = pd.DataFrame(self.grab_all_data(ind, dep))
+        df = self.grab_all_data(ind, dep)
+        print(df)
 
 
         # Create a plot

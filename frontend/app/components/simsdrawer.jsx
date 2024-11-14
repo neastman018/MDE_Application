@@ -262,6 +262,8 @@ export default function PersistentDrawerLeft() {
                   <Typography>{fileName}</Typography>
                 </ListItemButton>
                 <Popup open={showSimLog} onClose={() => setShowSimLog(false)} modal>
+                  {console.log(index)}
+                  {console.log(search_results.json_files[index])}
                   <SimPopUp code={search_results.json_files[index]} />
                 </Popup>
               </Box>
