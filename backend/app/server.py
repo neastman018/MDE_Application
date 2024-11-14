@@ -140,6 +140,7 @@ async def reads(variables: SearchModel):
     print(f" Search:{variables.search}")
     files_to_return = mongo.search_logs(variables.search)
     print(f"Number of Files Returned: {len(files_to_return)}")
+    print(f"Files Returned: {files_to_return}")
 
     if 0 <= variables.deleteFile < len(files_to_return):
         mongo.delete_log(files_to_return[variables.deleteFile])

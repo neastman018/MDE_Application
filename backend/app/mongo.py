@@ -189,6 +189,10 @@ class Mongo:
     def grab_single_dependent(self, ind: str, dep: str):
         search_results = {ind: [], dep: []}
 
+        # Some independent varaibles are nested in the database
+        if ind == "Total Time" or ind == "Total Distance" or ind == "Total Dropoffs":
+            ind = 'simulation results.' + ind
+
         # find the number of different values there is for the independent variablesi
         print(f"{Fore.GREEN}ind: {ind}{Style.RESET_ALL}")
 
@@ -289,6 +293,7 @@ class Mongo:
                 if search_str in str(doc):
                     numFiles += 1
                     files.append(doc)
+                    print(doc)
 
         except pymongo.errors.PyMongoError as e:
             print(f"{Fore.RED}Error retrieving logs from the database{Style.RESET_ALL}")
