@@ -101,16 +101,9 @@ class Mongo:
     """
     def upload_logs(self, log)->bool:
         files_commited = 0
-        # data = None
-        # try:
-        #     data = json.loads(log)
-        # except json.JSONDecodeError as e:
-        #     print(f"{Fore.RED}Error decoding log to JSON: {e}{Style.RESET_ALL}")
-        #     return
-
         
         if isinstance(log, dict):
-    # Proceed with uploading to MongoDB
+        # Proceed with uploading to MongoDB
             insert_result = self.simStats.insert_one(log)
         else:
             raise TypeError(f"Expected a dictionary but got {type(log)} instead")
@@ -155,87 +148,55 @@ class Mongo:
     ind Example: {'algorithm': 'A*'}
     dep Example: {'avgTimePerPackage': 1}
     """
-    def grab_data(self, alg:str, ind:dict, dep:dict):
-        # dep_term appends the name of the dependent variable to the string 'simulation results. to find in the database'
+    def grab_data(self, alg: str, ind: dict, dep: dict):
         dep_term = 'simulation results.' + list(dep.keys())[0]
-        
         numbers = []
         
         key = list(ind.keys())[0]
         value = list(ind.values())[0]
-        # need to change numpy int32 to int or mongo will not find any values
-        if isinstance(value, np.int32) or isinstance(value, np.int64):
+        # Convert numpy int types to regular int to avoid MongoDB issues
+        if isinstance(value, (np.int32, np.int64)):
             value = int(value)
-             
-        data = self.simStats.find({key: value, "Algorithm": alg}, {dep_term: 1})
 
+        elif isinstance(value, (np.float32, np.float64)):
+            value = float(value)
+
+            
+        # First, try to find data with `key` at the top level
+        data = self.simStats.find({key: value, "Algorithm": alg}, {dep_term: 1})
+        # Append data from either top-level or nested results
         for doc in data:
             numbers.append(doc['simulation results'][list(dep.keys())[0]])
-        
+
+        if len(numbers) == 0:
+            # If no top-level results, try finding `key` as a nested field in 'simulation results'
+            data = self.simStats.find({f"simulation results.{key}": value, "Algorithm": alg}, {dep_term: 1})
+            for doc in data:
+                # print(doc)
+                numbers.append(doc['simulation results'][list(dep.keys())[0]])
+
         return numbers
-   
+
+    
     
     """
     Does the same thing as grab_data but averages the data
     """
     def grab_avg_data(self, alg:str, ind:dict, dep:dict):
         data = self.grab_data(alg, ind, dep)
+        
+        #if the data did not return anything that we will throw it away, need to check to avoid an error
+        if len(data) == 0:
+            return -1
         return sum(data)/len(data)
 
-    """
-    Grabs each the independent variable values and dependent variable averages and makes a multi-dimensional array
-    ind Example: 'algorithm'
-    dep Example: 'avgTimePerPackage'
-    """
-    def grab_single_dependent(self, ind: str, dep: str):
-        search_results = {ind: [], dep: []}
-
-        # Some independent varaibles are nested in the database
-        if ind == "Total Time" or ind == "Total Distance" or ind == "Total Dropoffs":
-            ind = 'simulation results.' + ind
-
-        # find the number of different values there is for the independent variablesi
-        print(f"{Fore.GREEN}ind: {ind}{Style.RESET_ALL}")
-
-        data = self.simStats.find({ind: {"$exists": True}})
-
-        # Used for testing, commit out when sure it works properly
-        # print(f"{Fore.GREEN}Printing Documents{Style.RESET_ALL}")
-        # for doc in data:
-        #     print(doc)
-        #=========================================================
-        #should all unique values of the independent variable, having problems with this line.
-        variable_values = np.array(list(set([doc[ind] for doc in data])))   
-        print(f"variable_values = {variable_values}") 
-
-        for var in variable_values:
-            print({ind: var}, {dep: 1})
-            dep_value = self.grab_avg_data({ind: var}, {dep: 1}) # grab_avg_data is looking for var to be a string but it is an int
-            search_results[ind].append(var)
-            search_results[dep].append(round(dep_value,1))
-        print(f"search_results = {search_results}")
-        return search_results
 
     """
     Grabs each the independent variable values and multiple dependent variable averages and makes a multi-dimensional array
     ind Example: 'algorithm'
     deps Example: ['avgTimePerPackage', 'packagesHourRobots']
     """
-    # def grab_multiple_dependents(self, ind:str, deps:list):
-    #     search_results = {ind: [], "data": [], "Legend": []}
-
-    #     data = self.simStats.find({ind: {"$exists": True}})
-    #     variable_values = np.array(list(set([doc[ind] for doc in data])))    
-    #     for dep in deps:
-    #         for var in variable_values:
-    #             search_results[ind].append(var)
-    #             search_results["data"].append(round(self.grab_avg_data({ind: var}, {dep: 1}),1))
-    #             search_results["Legend"].append(dep)
-         
-    #     print(f"search_results = {search_results}")
-    #     return search_results
-
-    def grab_multiple_dependents(self, ind:str, dep:list):
+    def grab_all_data(self, ind:str, dep:list):
         if isinstance(dep, list):
             dep = dep[0]
 
@@ -243,53 +204,37 @@ class Mongo:
         ind_counts = []
         dep_counts = [] 
 
-        data = self.simStats.find({ind: {"$exists": True}})
+        # Get the different algorithms
+        data = self.simStats.find({"Algorithm": {"$exists": True}})
         algorithm_values = np.array(list(set([doc["Algorithm"] for doc in data])))
-        variable_values = np.array(list(set([doc[ind] for doc in data])))    
+        
+        data = self.simStats.find({ind: {"$exists": True}})
+        variable_values = np.array(list(set([doc[ind] for doc in data])))  
+        # If no top-level results, try finding `ind` as a nested field in 'simulation results'
+        if variable_values.size == 0:
+            data = self.simStats.find({f"simulation results.{ind}": {"$exists": True}})
+            variable_values = np.array(list(set(doc["simulation results"][ind] for doc in data)))
+
+
+        print(f"variable_values = {variable_values}")
+        print(f"algorithm_values = {algorithm_values}")  
 
         for alg in algorithm_values:
             for var in variable_values:
-                alg_list.append(alg)
-                ind_counts.append(var)
-                dep_counts.append(round(self.grab_avg_data(alg, {ind: var}, {dep: 1}),2))
+                if round(self.grab_avg_data(alg, {ind: var}, {dep: 1}),2) != -1:
+                    alg_list.append(alg)
+                    ind_counts.append(var)
+                    dep_counts.append(round(self.grab_avg_data(alg, {ind: var}, {dep: 1}),2))
 
-
+        print(f"alg_list = {alg_list}")
+        print (f"ind_counts = {ind_counts}")
+        print(f"dep_counts = {dep_counts}")
 
         print(f"Should be printing the dataframe")
         df = pd.DataFrame({"Algorithm": alg_list, ind: ind_counts, dep: dep_counts})
-        print(f"df = {df}")
+        
         return df
 
-    """ 
-    Combines the two previous methods into one method based on user input 
-    when uploading from the website the deps is always a list, therefore grab_multiple_dependents is always called
-    """
-    def grab_all_data(self, ind: str, dep: str):
-        if isinstance(dep, str): #if dep is string (only happens during testing w/o frontend)
-            print(f"Grabbing single dependent variable (str): {dep}")
-            return self.grab_single_dependent(ind, dep)
-        # elif isinstance(deps, list) and len(deps) == 1: #happens if frontend only selects 1 dependent variable
-        #     print(f"Grabbing single dependent variables (list): {deps}")
-        #     return self.grab_single_dependent(ind, deps)
-        elif isinstance(dep, list): #happends if frontend selects multiple dependent variables
-            print(f"Grabbing multiple dependent variables: {dep}")
-            return self.grab_multiple_dependents(ind, dep)
-        else: 
-            print("Invalid dependent variable type")
-            return []
-
-    """
-    Method to grab the data of a continuous variable from the database
-    NOT CURRENTLY IN USE
-    """
-    def grab_cont_data(self, ind, dep):
-        data = self.simStats.find({ind: {"$exists": True}})
-        search_results = {ind: [], dep: []}
-        for doc in data:
-            search_results[ind].append(doc[ind])
-            search_results[dep].append(doc['simulation results'][dep])
-        
-        return search_results    
 
 
     # Method to grab all the logs from the database
@@ -338,115 +283,58 @@ class Mongo:
 # Graphing Methods
 #=============================================================================================================================================================================================
 
-
-    def bar_graph(self, ind, dep):
-        dataset = pd.DataFrame(self.grab_all_data(ind, dep))
-
-        fig = plt.figure(figsize=(self.graph_width, self.graph_height))
-        if isinstance(dep, str):
-            # Set Y-axis bounds
-            max_y = dataset[dep].max()
-            bound_y = max_y - (max_y % 5) + 5 # rounds max_y up to the nearest multiple of 5
-
-            # Create a bar chart using seaborn
-            sb.barplot(data=dataset, x=ind, y=dep, color="#AA0000")
-
-            plt.xlabel(ind, fontsize=self.label_size)
-            plt.ylim(0, bound_y)
-            plt.yticks(np.arange(0, bound_y + 1, bound_y / 10))
-            plt.ylabel(dep, fontsize=self.label_size)
-            plt.title(f"{dep} vs {ind}", fontsize=self.title_size)
-            plt.show()
-            # Save the plot to a BytesIO object
-            plt.savefig(os.path.join('app', 'graph.png'))
-            
-            # Convert the graph to a PNG image and then encode it to base64
-            buffer = BytesIO()
-            plt.savefig(buffer, format="png")
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-
-            return base64.b64encode(image_png).decode('utf-8')
-            
-        if isinstance(dep, list):
-            
-            # Set Y-axis bounds
-            #max_y = dataset[dep].max()
-            #bound_y = np.ceil(max_y % 5) * 5 # rounds max_y up to the nearest multiple of 5
-
-            # Create a bar chart using seaborn
-            # y = data and hue = Legend are specificed in the grab_multiple_dependents method to put the dataset in the right format for seaborn
-            sb.barplot(data=dataset, x=ind, y="data", hue="Legend", color="#861F41")
-
-            plt.xlabel(ind)
-            # plt.ylim(0, bound_y)
-            # plt.yticks(np.arange(0, bound_y + 1, bound_y / 10))
-            plt.ylabel("")
-            # plt.title(f"{dep} vs {ind}")
-            plt.show()
-            
-            # Save the plot to a BytesIO object
-            plt.savefig(os.path.join('app', 'graph.png'))
-
-            # Convert the graph to a PNG image and then encode it to base64
-            buffer = BytesIO()
-            plt.savefig(buffer, format="png")
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-
-            return base64.b64encode(image_png).decode('utf-8')
-        
+    """
+    Method that graphs the data of the independent and dependent variables selected.
+    Currenly applies a thrid order polynomial line of best fit to the scatter plots
+    """
     def graph_data(self, ind, dep):
         colors = ["#861F41", "#E5751F", "#75787B"]
         df = self.grab_all_data(ind, dep)
         print(df)
 
-
         # Create a plot
         plt.figure(figsize=(10, 6))
-        
-        # Define a color mapping for each algorithm
-        algorithms = df["Algorithm"].unique()
-        color_map = {algorithm: colors[i] for i, algorithm in enumerate(algorithms)}
 
-        # Plot scatter points with the respective color for each algorithm
-        for algorithm in algorithms:
-            df_alg = df[df["Algorithm"] == algorithm]
-            sb.scatterplot(data=df_alg, x=ind, y=dep, color=color_map[algorithm], label=algorithm, s=50)
-        
-        # Fit and plot quadratic best-fit lines for each algorithm
-        for algorithm in algorithms:
-            df_alg = df[df["Algorithm"] == algorithm].dropna()
+        # Scatter plot
+        sb.scatterplot(data=df, x=ind, y=dep, hue="Algorithm", palette=colors)
 
-            # Reshape the independent variable for sklearn
-            X = df_alg[ind].values.reshape(-1, 1)
-            y = df_alg[dep].values
+        # Process and plot each algorithm's data
+        for algorithm in df['Algorithm'].unique():
+            alg_data = df[df['Algorithm'] == algorithm]
+            x = alg_data[ind]
+            y = alg_data[dep]
 
-            # Apply quadratic transformation
-            poly = PolynomialFeatures(degree=2)
-            X_poly = poly.fit_transform(X)
+            # Fit a cubic polynomial
+            coefficients = np.polyfit(x, y, 3)
+            polynomial = np.poly1d(coefficients)
 
-            # Fit a linear regression model to the transformed data
-            model = LinearRegression()
-            model.fit(X_poly, y)
+            # Compute residuals and filter out outliers
+            y_pred = polynomial(x)
+            residuals = np.abs(y - y_pred)
+            threshold = 1.5 * np.std(residuals)  # Set a threshold (e.g., 1.5 times the standard deviation)
+            inliers = residuals <= threshold
 
-            # Generate predicted values for plotting
-            X_range = np.linspace(X.min(), X.max(), 100).reshape(-1, 1)
-            X_range_poly = poly.transform(X_range)
-            y_pred = model.predict(X_range_poly)
+            x_filtered = x[inliers]
+            y_filtered = y[inliers]
 
-            # Plot the quadratic best-fit line with the same color as the scatter points
-            plt.plot(X_range, y_pred, color=color_map[algorithm], linewidth=1.5)
+            # Refit the polynomial with inlier data
+            coefficients_filtered = np.polyfit(x_filtered, y_filtered, 3)
+            polynomial_filtered = np.poly1d(coefficients_filtered)
+
+            # Generate fitted values
+            x_sorted = np.sort(x_filtered)
+            y_fitted = polynomial_filtered(x_sorted)
+
+            # Plot the fitted line
+            plt.plot(x_sorted, y_fitted, color=colors[df['Algorithm'].unique().tolist().index(algorithm)], label='_nolegend_')
 
         plt.title(f'{dep} vs {ind}')
         plt.xlabel(ind)
         plt.ylabel(dep)
         plt.legend(title="Algorithm")
         plt.grid(True)
-        plt.show()
 
+        # Save the plot as a PNG file
         plt.savefig(os.path.join('app', 'graph.png'))
 
         # Convert the graph to a PNG image and then encode it to base64
@@ -455,116 +343,13 @@ class Mongo:
         buffer.seek(0)
         image_png = buffer.getvalue()
         buffer.close()
+
+        # Show the plot
+        plt.show()
+
         return base64.b64encode(image_png).decode('utf-8')
-    
 
 
-    def line_graph(self, ind, dep):
-        dataset = pd.DataFrame(self.grab_all_data(ind, dep))
-        fig = plt.figure(figsize=(self.graph_width,self.graph_height))
-        if isinstance(dep, list):
-            sb.scatterplot(data=dataset, x=ind, y="data", hue="Legend", color="#861F41")
-            for i in range(len(dep)):
-                sb.lineplot(data=dataset, x=ind, y="data", hue="Legend", color="#861F41", legend=False)
-          
-            plt.xlabel(ind)
-            plt.ylabel(f"{dep}")
-            plt.title(f"{dep} vs {ind}")
-            plt.show()
-
-            plt.savefig(os.path.join('app', 'graph.png'))
-
-            # Convert the graph to a PNG image and then encode it to base64
-            buffer = BytesIO()
-            plt.savefig(buffer, format="png")
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-            return base64.b64encode(image_png).decode('utf-8')
-    
-        
-        elif isinstance(dep, str):          
-            # Calculate the average of dep for each unique value of ind
-            unique_ind = sorted(dataset[ind].unique())
-            print(unique_ind)
-            avgValue = []
-            for i in unique_ind:
-                avgValue.append(dataset[dataset[ind] == i][dep].mean())
-
-            #print(avgValue)
-            sb.scatterplot(x=unique_ind, y=avgValue, color="#861F41")
-
-            # Plot the average values as a line graph
-            sb.lineplot(x=unique_ind, y=avgValue, color="#861F41")
-            # Add labels and title to the graph
-            plt.xlabel(ind, fontsize=self.label_size)
-            plt.ylabel(f"Average {dep}", fontsize=self.label_size)
-            plt.title(f"Average {dep} vs {ind}", fontsize=self.title_size)
-            plt.show()
-
-            plt.savefig(os.path.join('app', 'graph.png'))            
-            # Convert the graph to a PNG image and then encode it to base64
-            buffer = BytesIO()
-            plt.savefig(buffer, format="png")
-            buffer.seek(0)
-            image_png = buffer.getvalue()
-            buffer.close()
-
-            return base64.b64encode(image_png).decode('utf-8')
-    """
-    Method that brings together the line graph and bar graph methods based on the independent variable selected
-    Also want it 
-    """
-    # def graph_data(self, ind, dep):
-    #     # If dep is a list with a single value make it a string
-    #     if isinstance(dep, list) and len(dep) == 1:
-    #         print(f"dep (list) (early) = {dep}")
-    #         dep = dep[0]
-    #         print(f"dep (str) (early) = {dep}")
-            
-
-    #     if ind == "Algorithm" or ind == "Floor Plan":
-    #         print("Making Bar Graph")
-    #         return self.bar_graph(ind, dep)
-    #     elif ind == "Number of Robots" or ind == "Regional Reroute Radius" or ind == "Number of Nodes" or ind == "Number of Obstacles":
-    #         print("Making Line Graph")
-    #         return self.line_graph(ind, dep)
-            
 
 if __name__ == "__main__":
     mongo = Mongo()
-
-    #print(mongo.grab_data({'Algorithm': 'A*'}, {'Average_Time_per_Package': 1}))
-    # print('=========================================================================')
-    #print(mongo.grab_avg_data({'Algorithm': 'A*'}, {'Average_Time_per_Package': 1}))
-    # print('=========================================================================')
-    #data = mongo.grab_single_dependent('Number_of_Nodes','Average_Time_per_Package')
-    # print('=========================================================================')
-    #print(mongo.grab_all_data('Number_of_Nodes','Average_Time_per_Package'))
-    # print('=========================================================================')
-    #data = mongo.grab_cont_data('Number of Robots', 'Number of Paths Rerouted per Stop')
-    
-
-
-
-
-
-
-# with open(filename) as file:
-#     data = json.load(file)
-
-# # Insert to Database
-# insert_result = simStats.insert_one(data)
-
-# # If the data is inserted successfully, remove the file
-# if insert_result.acknowledged:
-#     print('Data inserted successfully')
-#     os.remove(filename)
-# else: print("Data insertion failed")
-
-#result = simStats.insert_many(data)
-
- # Read the data from the database
-# docs = simStats.find()
-# for doc in docs:
-#     print(doc)

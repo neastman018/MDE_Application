@@ -25,7 +25,7 @@ origins = [
 
 class VariableModel(BaseModel):
     independent: str
-    dependent: list[str]
+    dependent: str
 
 class LogModel(BaseModel):
     files: list[dict]
@@ -77,7 +77,6 @@ async def get_variables(variables: VariableModel) -> dict:
 @app.post("/api", tags=["root"])
 async def reads(variables: VariableModel):
     print(f" ind:{variables.independent} dep:{variables.dependent}")
-
     graph_base64 = mongo.graph_data(variables.independent, variables.dependent)
     time.sleep(0.5)
 
@@ -163,4 +162,3 @@ async def reads(variables: SearchModel):
     }
 
     return JSONResponse(content=to_return)
-    

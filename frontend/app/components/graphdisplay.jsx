@@ -5,22 +5,19 @@ import { useGraphVariables } from '../hooks/get_graph.jsx'; // Adjust the import
 
 const indOptions = ["Number of Robots", "Total Time", "Total Distance", "Total Dropoffs"];
 
-const depOptions = [
-  { choice: 'Total E-Stops' },
-  { choice: 'Parcels per Hour per Robot' },
-  { choice: 'Average Time per Agent' },
-  { choice: 'Total Parcels per Hour' }
-];
+const depOptions = ['Total E-Stops', 'Parcels per Hour per Robot', 'Average Time per Agent', 'Total Parcels per Hour' ]
+
 
 export default function Graphs() {
   // Determine if the screen width is within the mobile range
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const [indVar, setIValue] = React.useState('');
-  const [depVar, setDValue] = React.useState([]);
+  const [depVar, setDValue] = React.useState('');
+
 
   const [submittedIndVar, setSubmittedIndVar] = React.useState('');
-  const [submittedDepVar, setSubmittedDepVar] = React.useState([]);
+  const [submittedDepVar, setSubmittedDepVar] = React.useState('');
 
   const { data: graph, isLoading, isError } = useGraphVariables(submittedIndVar, submittedDepVar);
 
@@ -28,18 +25,14 @@ export default function Graphs() {
     setIValue(event.target.value);
   };
 
-  const handleChangeDep = (event, newValue) => {
-    // Restrict to a maximum of 2 selections
-    if (newValue.length <= 3) {
-      setDValue(newValue);
-    } else {
-      alert('You can only select up to 2 options.');
-    }
+  const handleChangeDep = (event) => {
+    setDValue(event.target.value);
   };
+
 
   const handleSubmit = () => {
     setSubmittedIndVar(indVar);
-    setSubmittedDepVar(depVar.map(item => item.choice));
+    setSubmittedDepVar(depVar);
   };
 
   return (
@@ -99,35 +92,39 @@ export default function Graphs() {
           </FormControl>
           {!isMobile && (
             <FormControl sx={{ width: '100%' }}>
-              <Autocomplete
-                multiple
-                limitTags={2}
-                id="multiple-limit-tags"
-                options={depOptions}
-                getOptionLabel={(option) => option.choice}
+              <InputLabel id="demo-simple-select-label">Dependent Variable</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
                 value={depVar}
+                label="Dependent Variable"
                 onChange={handleChangeDep}
-                renderInput={(params) => (
-                  <TextField {...params} label="Dependent Variable" />
-                )}
-              />
+              >
+                {depOptions.map((dep) => (
+                  <MenuItem key={dep} value={dep}>
+                    {dep}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
           )}
         </Box>
         {isMobile && (
           <FormControl sx={{ width: '100%' }}>
-            <Autocomplete
-              multiple
-              limitTags={2}
-              id="multiple-limit-tags"
-              options={depOptions}
-              getOptionLabel={(option) => option.choice}
+            <InputLabel id="demo-simple-select-label">Dependent Variable</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={depVar}
+              label="Dependent Variable"
               onChange={handleChangeDep}
-              renderInput={(params) => (
-                <TextField {...params} label="Dependent Variable" />
-              )}
-            />
+            >
+              {depOptions.map((dep) => (
+                <MenuItem key={dep} value={dep}>
+                  {dep}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
         )}
         <Button variant="contained" sx={{ mt: 0, width: isMobile ? "100px" : "200px" }} onClick={handleSubmit}>

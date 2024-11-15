@@ -91,6 +91,8 @@ export default function PersistentDrawerLeft() {
   const [search, setSearch] = React.useState("");
   const [deleteFile, setDeleteFile] = React.useState(-1);
 
+  const [file_pop_up, SetFilePopUp] = React.useState(-1);
+
   const { data: search_results, isLoading, isError } = useSearch(search, deleteFile);
 
 
@@ -129,8 +131,9 @@ export default function PersistentDrawerLeft() {
     setShowDragNDrop(!showDragNDrop);
   };
 
-  const handleSimLogClick = () => {
+  const handleSimLogClick = (index) => {
     setShowSimLog(!showSimLog);
+    SetFilePopUp(index);
   };
 
   const handleDeleteFile = (index) => {
@@ -258,13 +261,12 @@ export default function PersistentDrawerLeft() {
                 >
                   <DeleteIcon sx={{ marginRight: '16px' }} />
                 </Button>
-                <ListItemButton onClick={handleSimLogClick} sx={{ flexGrow: 1 }}>
+                <ListItemButton onClick={() => handleSimLogClick(index)} sx={{ flexGrow: 1 }}>
                   <Typography>{fileName}</Typography>
                 </ListItemButton>
                 <Popup open={showSimLog} onClose={() => setShowSimLog(false)} modal>
-                  {console.log(index)}
-                  {console.log(search_results.json_files[index])}
-                  <SimPopUp code={search_results.json_files[index]} />
+                  <SimPopUp code={search_results.json_files[file_pop_up]} />
+                  {console.log(file_pop_up)}
                 </Popup>
               </Box>
             ))}
