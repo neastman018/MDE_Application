@@ -255,8 +255,9 @@ class Mongo:
 
 
 
-         
+        print(f"Should be printing the dataframe")
         df = pd.DataFrame({"Algorithm": alg_list, ind: ind_counts, dep: dep_counts})
+        print(f"df = {df}")
         return df
 
     """ 
