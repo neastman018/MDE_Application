@@ -407,12 +407,12 @@ class Mongo:
         plt.figure(figsize=(10, 6))
         
         # Define a color mapping for each algorithm
-        algorithms = df["Legend"].unique()
+        algorithms = df["Algorithm"].unique()
         color_map = {algorithm: colors[i] for i, algorithm in enumerate(algorithms)}
 
         # Plot scatter points with the respective color for each algorithm
         for algorithm in algorithms:
-            df_alg = df[df["Legend"] == algorithm]
+            df_alg = df[df["Algorithm"] == algorithm]
             sb.scatterplot(data=df_alg, x=ind, y=dep, color=color_map[algorithm], label=algorithm, s=50)
         
         # Fit and plot quadratic best-fit lines for each algorithm
