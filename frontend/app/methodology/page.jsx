@@ -31,19 +31,20 @@ const theme = extendTheme({
       title: "A*",
       description: `
             A* is the core of our pathing algorithm. it starts by initializing a list of nodes. then finding the cost to travers each node.
-            then will traverse the graph with the lowest cost
+            then will traverse the graph with the lowest cost.
           `,
     },
     {
       title: "D*",
       description: `
-          D* description
+          D* is an improvement on A*. Where it will continuously update its path as changes in the environment are detected. Whereas A* will
+          need to recalculate the entire path.
           `,
     },
     {
-      title: "Random Tree",
+      title: "Rapidly Exploring Random Trees",
       description: `
-        random tree description
+        Random tree incrementally builds a tree of nodes in a random fashion. then dynamically connects each node based on the closest neightbors
       `,
     }
   
@@ -58,17 +59,9 @@ const navItems = [
 export default function ApproachPage() {
   return (
     <Experimental_CssVarsProvider theme={theme}> 
-
-      <Box sx={{ display: 'flex', p: 3, flexDirection: 'column'}}>
-        <CssBaseline />
-        <DrawerAppBar navItems={navItems} theme={theme}/>
-        <Toolbar />
-        <AlgorithmTabs />
-      </Box>  
-  
       <Box component="main" sx={{ p: 0}}>
           <Box sx={{ padding: 2, justifyContent: 'center' }}>
-          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
+          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center',textAlign: 'center'}}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
               <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
               <Typography variant="h4" sx={{ padding: 0, fontWeight: 'bold',  justifyContent: 'center' }}>
@@ -85,7 +78,16 @@ export default function ApproachPage() {
             </Card>
           </Grid>
           </Box>
-          </Box>  
+        </Box>  
+
+      <Box sx={{ display: 'flex', p: 3, flexDirection: 'column'}}>
+        <CssBaseline />
+        <DrawerAppBar navItems={navItems} theme={theme}/>
+        <Toolbar />
+        <AlgorithmTabs />
+      </Box>  
+  
+
     </Experimental_CssVarsProvider>
   );
 }
