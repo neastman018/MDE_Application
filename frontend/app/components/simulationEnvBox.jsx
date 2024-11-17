@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Box, Button, Collapse, Typography, Card} from '@mui/material';
+import { Box, Button, Collapse, Typography, Card } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import InfoIcon from '@mui/icons-material/Info';
 
-
-
-export default function SimEnvBox({isMobile}) {
+export default function SimEnvBox({ isMobile }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -19,36 +17,38 @@ export default function SimEnvBox({isMobile}) {
         <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
           Customer Simulation Environment
         </Typography>
-        {!isMobile && ( //Change the Location of the info button on mobile phones to be below
-        <Button onClick={handleClick}>
+        {!isMobile && ( // Change the Location of the info button on mobile phones to be below
+          <Button onClick={handleClick}>
             <InfoIcon />
-        </Button>
+          </Button>
         )}
       </Box>
       {isMobile && (
         <Button onClick={handleClick}>
-            <InfoIcon />
+          <InfoIcon />
         </Button>
-        )}
-  
+      )}
+
       {/* Collapsible Content Below */}
       <Collapse in={open} timeout="auto" unmountOnExit>
-      <Box component="main" sx={{ p: 1 }}>
+        <Box component="main" sx={{ p: 1 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 1 }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2, textAlign: 'left'}}>
-                <Typography variant="body1" sx = {{paddingBottom: 1}}>
-                  The customer has there own simulation environment to test their robots on actual floor plans. 
-                  The environment simulates not only the robot's movements but also
-                  there physics, package pick ups and dropoff. The enviroment is designed to closely resemble the robots actual working environment.
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2, textAlign: 'left' }}>
+                <Typography variant="body1" sx={{ paddingBottom: 1 }}>
+                  The customer has their own simulation environment to test their robots on actual floor plans. 
+                  The environment simulates not only the robot&apos;s movements but also
+                  their physics, package pick-ups, and drop-offs. The environment is designed to closely resemble the robots&apos; actual working environment.
                 </Typography>
                 <Typography variant="body1">
-                  Each floor plan is represented as a list of nodes, which represents pickup, dropoff, and avaible spots for the robots
+                  Each floor plan is represented as a list of nodes, which represents pick-up, drop-off, and available spots for the robots
                   to occupy. Robots can move between nodes as they traverse the floor plan.
                 </Typography>
               </Box>
               <Box sx={{ padding: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              <Box component="img" sx={{width: { xs: '100%', md: '100%' }, height: 'auto'}}
+                <Box
+                  component="img"
+                  sx={{ width: { xs: '100%', md: '100%' }, height: 'auto' }}
                   alt="Prime Vision Robots"
                   src="simEnvironment.png"
                 />
