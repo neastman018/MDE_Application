@@ -1,12 +1,14 @@
 'use client'
 import * as React from 'react';
-import { Box, CssBaseline, Grid, Typography, Card, useMediaQuery} from '@mui/material';
+import { Box, CssBaseline, Typography, Card, useMediaQuery} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme } from '@mui/material/styles';
 import DrawerAppBar from '../components/navbar';
 import FlipCardPicture from '../components/picflipcard';
 import FlipCardComponent from '../components/problemflipcards';
 import SimFlipCard from '../components/simflipcard';
-import VideoPlayer from '../components/videoplayer';
+import SimEnvBox from '../components/simulationEnvBox';
+
 
 const theme = extendTheme({
   colorSchemes: {
@@ -136,51 +138,41 @@ export default function ProjectPage() {
     <Experimental_CssVarsProvider theme={theme}>
         <CssBaseline />
         <DrawerAppBar navItems={navItems} theme={theme} />
-        <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center', paddingTop: 15 }}>
-          <Box sx={{ padding: 2, flexDirection: "row" }}>
-            <Grid container spacing={2} sx={{ padding: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', textAlign: 'center', paddingTop: 15, justifyContent: 'center', alignItems: 'center' }}>
+          <Box sx={{ padding: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+            <Grid container spacing={2} sx={{ justifyContent: 'center', alignItems: 'center', padding: 2 }}>
               {overallCards.map((component, index) => (
-                <Grid item xs={12} md={4} key={index}>
-                  <FlipCardComponent key={index} post={component} width={"900px"} height={"200px"} />
+                <Grid item xs={12} md={4} key={index} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <FlipCardComponent key={index} post={component} width={"400px"} height={"200px"} />
                 </Grid>
               ))}
             </Grid>
           </Box>
         </Card>
-
-
         <Box component="main" sx={{ p: 10 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 10 }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', height: '25vw' }}>
-              <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
+            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
                 <Typography variant="h4">
                   About Prime Vision
                 </Typography>
                 <Typography variant="body1">
-                  Prime Vision a global leader in computer vision integration and robotics for logistics and fulfillment. 
+                  Prime Vision is a global leader in computer vision integration and robotics for logistics and fulfillment.
                   They operate fleets of autonomous package sorting robots to automate warehouses across the nation and abroad.
                 </Typography>
-              </Grid>
-              <Grid item xs={12} md={7} sx={{ padding: 1 }}>
-                <Box
-                  component="img"
-                  sx={{
-                    width: '100%',
-                    height: '25vw',
-                    maxHeight: { xs: 233, md: 300 },
-                    maxWidth: { xs: 350, md: '100%' },
-                    paddingLeft: 20
-                  }}
+              </Box>
+              <Box sx={{ padding: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <Box component="img" sx={{width: { xs: '100%', md: '100%' }, height: 'auto'}}
                   alt="Prime Vision Robots"
                   src="autographic.png"
-                  objectFit="cover"
                 />
-              </Grid>
+              </Box>
             </Card>
           </Grid>
+
           <Grid container spacing={4} sx={{ paddingBottom: 0 }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
-              <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
                 <Typography variant="h4">
                   About the Robots
                 </Typography>
@@ -190,51 +182,62 @@ export default function ProjectPage() {
                   They have LIDAR sensors that can detect obstacles and two motored wheels that allow it to make tight turns
                   and move around the warehouse.
                 </Typography>
-              </Grid>
-              <Grid item xs={12} md={8}>
+              </Box>
+              <Box sx={{ padding: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <FlipCardPicture post={picCards[0]} />
-              </Grid>
+              </Box>
             </Card>
           </Grid>
-         </Box>     
+         </Box>  
          <Box component="main" sx={{ p: 0}}>
-          <Box sx={{ padding: 2, justifyContent: 'center' }}>
-          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
-              <Typography variant="h4" sx={{ padding: 0, fontWeight: 'bold',  justifyContent: 'center' }}>
-              Current Problems 
+          <Box sx={{ padding: 2, justifyContent: 'center', textAlign: 'center' }}>
+              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
+                Current Problems
               </Typography>
-              <Grid container spacing={2} sx={{ padding: 2 }}>
+              <Grid 
+                container 
+                spacing={2} 
+                sx={{ 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  padding: 2 
+                }}
+              >
                 {problemCards.map((component, index) => (
                   <Grid item xs={12} md={4} key={index}>
-                    <FlipCardComponent key={index} post={component} width={"400px"} height={"200px"}/>
+                    <FlipCardComponent key={index} post={component} width={"400px"} height={"200px"} />
                   </Grid>
                 ))}
               </Grid>
-              </Box>
-            </Card>
-          </Grid>
-          </Box>
-          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row" }}>
-              <Typography variant="h4" justifyContent="center" sx={{ padding: 2, fontWeight: 'bold' }}>
-              Project Objectives
+            </Box>
+
+
+            <Box sx={{ padding: 2, justifyContent: 'center', textAlign: 'center' }}>
+              <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
+                Project Objectives
               </Typography>
-              <Grid container spacing={2} sx={{ padding: 2 }}>
+              <Grid 
+                container 
+                spacing={2} 
+                sx={{ 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  padding: 2 
+                }}
+              >
                 {objectiveCards.map((component, index) => (
-                  <Grid item xs={12} md={4} key={index} justifyContent="center">
-                    <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"}/>
+                  <Grid item xs={12} md={4} key={index}>
+                    <FlipCardComponent key={index} post={component} width={"400px"} height={"275px"} />
                   </Grid>
                 ))}
               </Grid>
-              </Box>
-            </Card>
-          </Grid>
-          <SimFlipCard post={simCards[0]}/>
-        
+            </Box>
         </Box>
+
+        <Box component="main" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 2, width: '100%' }}>
+          <SimEnvBox isMobile={isMobile} />
+        </Box>
+
 
     </Experimental_CssVarsProvider>
   );
