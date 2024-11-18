@@ -311,7 +311,7 @@ class Mongo:
             # Compute residuals and filter out outliers
             y_pred = polynomial(x)
             residuals = np.abs(y - y_pred)
-            threshold = 1.5 * np.std(residuals)  # Set a threshold (e.g., 1.5 times the standard deviation)
+            threshold = 5 * np.std(residuals)  # Set a threshold (e.g., 5 times the standard deviation)
             inliers = residuals <= threshold
 
             x_filtered = x[inliers]
