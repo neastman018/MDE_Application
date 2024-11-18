@@ -106,18 +106,18 @@ const aboutUsCards = [
     His technical knowledge has been invaluable on this project in helping us pursure the correct direction for the customer.
     `,
   },
-  // {
-  //   name: "Henry Forsyth",
-  //   major: "CPE - Controls Robotic and Autonomy",
-  //   role: "Graduate Teaching Assistant",
-  //   alt: "Henry Forsyth",
-  //   image: "HenryForsyth.jpg",
-  //   description: `
-  //   Henry is a graduate student at Virginia Tech studying controls, robotics, and autonomy. He has been invaluable in helping the web design part of this project. Through his academic and professional experience
-  //   he has alot of knowledge in the field of application development. Because of his help, the team not only only a visually appealing and fuctional website, but also one that follows industry standard.
-  //   His help was invaluable in the completion of this project.
-  //   `
-  // }
+  {
+    name: "Henry Forsyth",
+    major: "CPE - Controls Robotic and Autonomy",
+    role: "Graduate Teaching Assistant",
+    alt: "Henry Forsyth",
+    image: "HenryForsyth.jpg",
+    description: `
+    Henry is a graduate student at Virginia Tech studying controls, robotics, and autonomy. He has been invaluable in helping the web design part of this project. Through his academic and professional experience
+    he has alot of knowledge in the field of application development. Because of his help, the team not only only a visually appealing and fuctional website, but also one that follows industry standard.
+    His help was invaluable in the completion of this project.
+    `
+  }
 ]
 
 export default function AboutUsPage() {
