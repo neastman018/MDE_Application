@@ -40,12 +40,6 @@ const theme = extendTheme({
           D* is an improvement on A*. Where it will continuously update its path as changes in the environment are detected. Whereas A* will
           need to recalculate the entire path.
           `,
-    },
-    {
-      title: "Rapidly Exploring Random Trees",
-      description: `
-        Random tree incrementally builds a tree of nodes in a random fashion. then dynamically connects each node based on the closest neightbors
-      `,
     }
   
   ];
