@@ -40,6 +40,12 @@ const theme = extendTheme({
           D* is an improvement on A*. Where it will continuously update its path as changes in the environment are detected. Whereas A* will
           need to recalculate the entire path.
           `,
+    },
+    {
+      title: "dynamic A*",
+      description: `
+        Our implimentation of multi agent pathing using new research
+          `,
     }
   
   ];
