@@ -66,32 +66,19 @@ export default function ApproachPage() {
         <CssBaseline />
         <DrawerAppBar navItems={navItems} theme={theme}/>
         <Toolbar />
-        {/* <AlgorithmTabs /> */}
       </Box>  
+      <Box component="main" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 2, width: '100%' }}>
+        <OurSimBox isMobile={isMobile}/>
+      </Box>
+    <Box sx={{ display: 'flex', p: 3, flexDirection: 'column', textAlign: 'center'}}>
+      <Typography variant="h4" sx={{ padding: 2, fontWeight: 'bold' }}>
+        Algorithms Simulated
+      </Typography>
+    </Box>
 
-      <OurSimBox isMobile={isMobile}/>
+    <AlgorithmTabs isMobile={isMobile}/>
 
   
-      <Box component="main" sx={{ p: 0}}>
-          <Box sx={{ padding: 2, justifyContent: 'center' }}>
-          <Grid container spacing={4} sx={{ paddingBottom: 10, paddingTop: 10, justifyContent: 'center' }}>
-            <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw', textAlign: 'center' }}>
-              <Box sx={{ padding: 2, flexDirection: "row", justifyContent: 'center' }}>
-              <Typography variant="h4" sx={{ padding: 0, fontWeight: 'bold',  justifyContent: 'center' }}>
-                Algorithms
-              </Typography>
-              <Grid container spacing={2} sx={{ padding: 2 }}>
-                {algorithmCards.map((component, index) => (
-                  <Grid item xs={12} md={4} key={index}>
-                    <FlipCardComponent key={index} post={component} width={"400px"} height={"200px"}/>
-                  </Grid>
-                ))}
-              </Grid>
-              </Box>
-            </Card>
-          </Grid>
-          </Box>
-          </Box>  
     </Experimental_CssVarsProvider>
   );
 }
