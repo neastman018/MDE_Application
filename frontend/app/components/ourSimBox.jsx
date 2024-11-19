@@ -3,6 +3,7 @@ import { Box, Button, Collapse, Typography, Card, Dialog, DialogContent } from '
 import Grid from '@mui/material/Grid2';
 import InfoIcon from '@mui/icons-material/Info';
 
+
 export default function OurSimBox({ isMobile }) {
   const [open, setOpen] = React.useState(false);
 
