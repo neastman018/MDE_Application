@@ -5,6 +5,7 @@ import { Experimental_CssVarsProvider, experimental_extendTheme as extendTheme} 
 import  AlgorithmTabs from '../components/tabs';
 import DrawerAppBar from '../components/navbar';
 import FlipCardComponent from '../components/problemflipcards';
+import OurSimBox from '../components/ourSimBox'
 const theme = extendTheme({
     colorSchemes: {
       light: {
@@ -55,6 +56,9 @@ const navItems = [
 ];
 
 export default function ApproachPage() {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+
   return (
     <Experimental_CssVarsProvider theme={theme}> 
 
@@ -62,8 +66,11 @@ export default function ApproachPage() {
         <CssBaseline />
         <DrawerAppBar navItems={navItems} theme={theme}/>
         <Toolbar />
-        <AlgorithmTabs />
+        {/* <AlgorithmTabs /> */}
       </Box>  
+
+      <OurSimBox isMobile={isMobile}/>
+
   
       <Box component="main" sx={{ p: 0}}>
           <Box sx={{ padding: 2, justifyContent: 'center' }}>

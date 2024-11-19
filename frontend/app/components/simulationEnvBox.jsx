@@ -34,8 +34,8 @@ export default function SimEnvBox({ isMobile }) {
         <Box component="main" sx={{ p: 1 }}>
           <Grid container spacing={4} sx={{ paddingBottom: 1 }}>
             <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, width: '100vw' }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2, textAlign: 'left' }}>
-                <Typography variant="body1" sx={{ paddingBottom: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2, textAlign: 'left'}}>
+                <Typography variant="body1" sx={{ paddingBottom: 5 }}>
                   The customer has their own simulation environment to test their robots on actual floor plans. 
                   The environment simulates not only the robot&apos;s movements but also
                   their physics, package pick-ups, and drop-offs. The environment is designed to closely resemble the robots&apos; actual working environment.
