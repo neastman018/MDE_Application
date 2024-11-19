@@ -58,7 +58,7 @@ export default function OurSimBox({ isMobile }) {
                 }}
               >
                 <Typography variant="body1" sx={{ paddingBottom: 3 }}>
-                  The first step of our project was to create our own simulation environment. Due to how the customer's was set up we were unable to use their environment
+                  The first step of our project was to create our own simulation environment. Due to how the customer&apos;s was set up we were unable to use their environment
                   to simulate our algorithm.
                 </Typography>
                 <Typography variant="body1" sx={{ paddingBottom: 3 }}>
@@ -66,7 +66,7 @@ export default function OurSimBox({ isMobile }) {
                   navigate on are specified in JSON files.
                 </Typography>
                 <Typography variant="body1" sx={{ paddingBottom: 3 }}>
-                  We could take these JSON files and create our own graph of the nodes to animate the robot's movement during the simulation.
+                  We could take these JSON files and create our own graph of the nodes to animate the robot&apos;s movement during the simulation.
                 </Typography>
               </Box>
 
