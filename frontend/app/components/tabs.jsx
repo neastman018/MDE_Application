@@ -36,17 +36,32 @@ export default function AlgorithmTabs() {
                         <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
                             <Tab label="A*" value="1" />
                             <Tab label="D*" value="2" />
-                            <Tab label="Random Tree" value="3" />
+                            <Tab label="Dynamic A*" value="3" />
                         </TabList>
                     </Box>
                     <TabPanel value="1" sx={{ width: '60%', transform: 'rotateY(5deg) translateZ(10px)', transition: 'transform 0.5s' }}>
-                    <CodeBlock code={a_star_code} language="python" />
+                    <Box
+                        component="img"
+                        alt="A* flow chart"
+                        src="astarChart.png"
+                        objectFit="cover"
+                        />
                     </TabPanel>
                     <TabPanel value="2" sx={{ width: '60%', transform: 'rotateY(5deg) translateZ(10px)', transition: 'transform 0.5s' }}>
-                    <CodeBlock code={d_star_code} language="python" />
+                    <Box
+                        component="img"
+                        alt="D* flow chart"
+                        src="dstarChart.png"
+                        objectFit="cover"
+                        />
                     </TabPanel>
                     <TabPanel value="3" sx={{ width: '60%', transform: 'rotateY(5deg) translateZ(10px)', transition: 'transform 0.5s' }}>
-                    <CodeBlock code={random_tree_code} language="python" />
+                            <Box
+                        component="img"
+                        alt="Dynamic A* animation"
+                        src="dynamicAstar.gif"
+                        objectFit="cover"
+                        />
                     </TabPanel>
                 </TabContext>
         </Box>
