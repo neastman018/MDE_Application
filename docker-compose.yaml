@@ -1,22 +1,25 @@
+version: '3.7'
+
 services:
   frontend:
-    image: neastman/mde:frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev  # Explicitly mention the Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - ./frontend/app:/frontend/app
       - ./frontend/public:/frontend/public
-    # command: tail -f /dev/null #For Debugging
-    command: npm run start
+    command: npm run dev
 
-  backend: # Fast Api Server
-    image: neastman/mde:backend
+  backend: # FastAPI Server
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev  # Explicitly mention the Dockerfile
     ports:
       - "4000:4000"
     volumes:
       - ./backend/app:/backend/app
-    #command: uvicorn main:app --reload
-    # Puts in blank shell states
     command: poetry run uvicorn app.server:app --host 0.0.0.0 --port 4000 --reload
     environment: 
       - MONGO_URI=mongodb://mongoAdmin:m0ng0passw0rd@mongo:27017
@@ -27,7 +30,6 @@ services:
       - "27017:27017"
     volumes:
       - ./data:/data/db
-    
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongoAdmin
       MONGO_INITDB_ROOT_PASSWORD: m0ng0passw0rd
@@ -42,10 +44,19 @@ services:
       - ME_CONFIG_MONGODB_URL=mongodb://mongoAdmin:m0ng0passw0rd@mongo:27017
     depends_on:
       - mongo
+      
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   environment:
+  #     - NGINX_PORT=80
+  #   volumes:
+  #     - ./nginx/config:/etc/nginx/conf.d
+  #   depends_on:
+  #     - frontend
 
-volumes:
-  mongodata:
-    driver: local
-version: '3.7'
-
-
+# volumes:
+#   mongodata:
+#     driver: local
