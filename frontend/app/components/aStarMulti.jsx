@@ -83,8 +83,8 @@ export default function AStarMultiBox() {
                       height: 'auto',
                       objectFit: 'contain', // Keep the aspect ratio intact
                     }}
-                    alt="AStarMulti.png"
-                    src="AStarMulti.png"
+                    alt="AstarMulti.png"
+                    src="AstarMulti.png"
                   />
                 </Box>
               </Box>
@@ -137,8 +137,8 @@ export default function AStarMultiBox() {
                       height: 'auto',
                       objectFit: 'contain', // Keep the aspect ratio intact
                     }}
-                    alt="AStarExample.gif"
-                    src="AStarExample.gif"
+                    alt="AstarExample.gif"
+                    src="AstarExample.gif"
                   />
                 </Box>
               </Box>
