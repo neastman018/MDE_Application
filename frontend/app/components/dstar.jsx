@@ -131,8 +131,8 @@ export default function DStarBox({ isMobile }) {
                       height: 'auto',
                       objectFit: 'contain', // Keep the aspect ratio intact
                     }}
-                    alt="DStarEx.gif"
-                    src="DStarEx.gif"
+                    alt="DStarExample.gif"
+                    src="DStarExample.gif"
                   />
                 </Box>
               </Box>
