@@ -137,8 +137,8 @@ export default function AStarMultiBox() {
                       height: 'auto',
                       objectFit: 'contain', // Keep the aspect ratio intact
                     }}
-                    alt="AstarExample.gif"
-                    src="AstarExample.gif"
+                    alt="AStarMultiEx.gif"
+                    src="AStarMultiEx.gif"
                   />
                 </Box>
               </Box>
